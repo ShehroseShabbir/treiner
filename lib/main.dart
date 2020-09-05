@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:treiner/WelcomePages/SignUpPlayer.dart';
+import 'package:treiner/WelcomePages/SignUp.dart';
 
 void main() =>
-    runApp(MaterialApp(home:SignUpPlayer()),
+    runApp(MaterialApp(home:SignUp()),
     );
