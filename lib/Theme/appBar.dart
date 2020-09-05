@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:treiner/InfoPages/AboutUs.dart';
 import 'package:treiner/InfoPages/Privacy.dart';
 import 'package:treiner/InfoPages/Sessions.dart';
 import 'file:///D:/AndroidStudioProjects/treiner/lib/InfoPages/ContactUs.dart';
@@ -37,6 +38,10 @@ class myDrawer extends StatelessWidget{
           ListTile(
             title: Text('Privacy'),
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Privacy())),
+          ),
+          ListTile(
+            title: Text('About Treiner'),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUs())),
           ),
           ListTile(
             title: Text('Contact Us'),
