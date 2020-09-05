@@ -4,8 +4,6 @@ final Color tGreen = Color(0xff006944);
 final Color tGrey = Color(0xffc7c8ca);
 final Color tBrown = Color(0xFFbc9f77);
 
-
-
 final ThemeData myTheme = ThemeData(
   fontFamily: 'Futura',
   primarySwatch: MaterialColor(0xff006944,{50: Color(0xffe5fff6), 100: Color(0xffccffed), 200: Color(0xff99ffdb), 300: Color(0xff66ffc9), 400: Color(0xff33ffb7), 500: Color(0xff00ffa5), 600: Color(0xff00cc84), 700: Color(0xff009963), 800: Color(0xff006642), 900: Color(0xff003321)}),
