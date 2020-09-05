@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:treiner/WelcomePages/ContactUs.dart';
-import 'package:treiner/WelcomePages/Privacy.dart';
-import 'package:treiner/WelcomePages/Sessions.dart';
+import 'package:treiner/InfoPages/Privacy.dart';
+import 'package:treiner/InfoPages/Sessions.dart';
+import 'file:///D:/AndroidStudioProjects/treiner/lib/InfoPages/ContactUs.dart';
 
 Widget myAppBar(String title) {
   return Scaffold(
@@ -40,7 +40,7 @@ class myDrawer extends StatelessWidget{
           ),
           ListTile(
             title: Text('Contact Us'),
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs())),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUS())),
           ),
           ListTile(
             title: Text('Log Out'),

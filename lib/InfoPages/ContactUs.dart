@@ -1,9 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:treiner/Theme/appBar.dart';
+import 'package:treiner/Theme/theme.dart';
 
-
-class ContactUs extends StatelessWidget{
+class ContactUS extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: myTheme,
+      home: ContactUsPage(),
+    );
+  }
+}
+class ContactUsPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,11 +22,17 @@ class ContactUs extends StatelessWidget{
         centerTitle: true,
         title: Text('Contact Us'),
       ),
-      body: Column(children: <Widget>[
-        Text('We’re here to assist you. Send us a message with the form below!'),
-        ContactUsForm(),
-      ],),
-
+      drawer: myDrawer(),
+      body: Padding(
+        padding: EdgeInsets.all(13.0),
+        child: Column(children: <Widget>[
+          Text('We\'re here to assist you. Send us a message with the form below!',
+            style: Theme.of(context).textTheme.subtitle2,
+          ),
+          SizedBox(height: 5),
+          ContactUsForm(),
+        ],),
+      ),
     );
   }
 }
@@ -42,22 +58,27 @@ class _ContactUsFormState extends State<ContactUsForm>{
           TextFormField(
               controller: _ctrlFirstName,
               decoration: InputDecoration(
+                prefixIcon: Icon(Icons.person),
                 hintText: 'Enter your first name.',
                 labelText: 'First Name',
               ),
               validator: RequiredValidator(errorText: 'Please enter your first name.')
           ),
+          SizedBox(height: 5),
           TextFormField(
               controller: _ctrlLastName,
               decoration: InputDecoration(
+                prefixIcon: Icon(Icons.person),
                 hintText: 'Enter your last name.',
                 labelText: 'Last Name',
               ),
               validator: RequiredValidator(errorText: 'Please enter your last name.')
           ),
+          SizedBox(height: 5),
           TextFormField(
               controller: _ctrlEmail,
               decoration: InputDecoration(
+                prefixIcon: Icon(Icons.email),
                   hintText: 'Enter your email.',
                 labelText: 'Email Address',
               ),
@@ -65,10 +86,12 @@ class _ContactUsFormState extends State<ContactUsForm>{
                 EmailValidator(errorText: 'Please enter valid email address.')]
               )
           ),
+          SizedBox(height: 5),
           TextFormField(
             controller: _ctrlHelpContext,
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
+              prefixIcon: Icon(Icons.assistant),
               hintText: 'How can we help you?',
               labelText: 'How can we Help you?',
             ),
@@ -76,6 +99,7 @@ class _ContactUsFormState extends State<ContactUsForm>{
             minLines: 5,
             maxLines: 100,
           ),
+          SizedBox(height: 5),
           RaisedButton(
             onPressed: (){
               _formKey.currentState.validate();

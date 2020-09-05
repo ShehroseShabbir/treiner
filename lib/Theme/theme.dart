@@ -30,7 +30,7 @@ final ThemeData myTheme = ThemeData(
     textTheme: ButtonTextTheme.primary,
     minWidth: 150.0,
     height: 40.0,
-    padding: EdgeInsets.all(5.0),
+    padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(18.0),
     ),

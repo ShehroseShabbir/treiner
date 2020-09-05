@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:treiner/Theme/appBar.dart';
-import 'package:treiner/WelcomePages/TermsConditions.dart';
+import 'file:///D:/AndroidStudioProjects/treiner/lib/InfoPages/TermsConditions.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:treiner/Theme/theme.dart';
 
@@ -148,46 +148,52 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
             SizedBox(height: 5),
             Row(
               children: <Widget>[
-                Icon(Icons.change_history),
-                Text('Gender'),
-                SizedBox(width: 20),
-                DropdownButton(
-                  hint: Text('Select your gender'),
-                  value: _selectedGender,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedGender = newValue;
-                    });
-                  },
-                  items: _gender.map((gender) {
-                    return DropdownMenuItem(
-                      child: new Text(gender),
-                      value: gender,
-                    );
-                  }).toList(),
-                ),
+                Expanded(flex: 1, child: Icon(Icons.change_history)),
+                Expanded(flex: 2, child: Text('Gender',
+                    style: Theme.of(context).textTheme.subtitle1)),
+                Expanded(
+                  flex: 6,
+                  child: DropdownButton(
+                    hint: Text('Select your gender'),
+                    value: _selectedGender,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedGender = newValue;
+                      });
+                    },
+                    items: _gender.map((gender) {
+                      return DropdownMenuItem(
+                        child: new Text(gender),
+                        value: gender,
+                      );
+                    }).toList(),
+                  ),
+                )
               ],
             ),
             SizedBox(height: 5),
             Row(
               children: <Widget>[
-                Icon(Icons.location_city),
-                Text('Country'),
-                SizedBox(width: 20),
-                DropdownButton(
-                  hint: Text('Select your country'),
-                  value: _selectedCountry,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedCountry = newValue;
-                    });
-                  },
-                  items: _country.map((country) {
-                    return DropdownMenuItem(
-                      child: new Text(country),
-                      value: country,
-                    );
-                  }).toList(),
+                Expanded(flex: 1, child: Icon(Icons.location_city)),
+                Expanded(flex: 2, child: Text('Country',
+                    style: Theme.of(context).textTheme.subtitle1)),
+                Expanded(
+                  flex: 6,
+                  child: DropdownButton(
+                    hint: Text('Select your country'),
+                    value: _selectedCountry,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedCountry = newValue;
+                      });
+                    },
+                    items: _country.map((country) {
+                      return DropdownMenuItem(
+                        child: new Text(country),
+                        value: country,
+                      );
+                    }).toList(),
+                  ),
                 ),
               ],
             ),
@@ -253,7 +259,9 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
                 RichText(
                   text: TextSpan(
                       text: 'terms and conditions',
-                      style: DefaultTextStyle.of(context).style,
+                      style: Theme.of(context).textTheme.bodyText2.merge(
+                          TextStyle(
+                              color: tGreen, fontWeight: FontWeight.w500)),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           Navigator.push(
