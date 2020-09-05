@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:treiner/Theme/appBar.dart';
 import 'package:treiner/Theme/theme.dart';
 
 class Privacy extends StatelessWidget {
@@ -19,6 +20,7 @@ class PrivacyPage extends StatelessWidget {
         centerTitle: true,
         title: Text('Privacy Policy'),
       ),
+      drawer: myDrawer(),
       body: Padding(padding: EdgeInsets.all(13.0), child: _privacy()),
     );
   }

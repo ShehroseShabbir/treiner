@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:treiner/Theme/appBar.dart';
+import 'package:treiner/Theme/theme.dart';
 
-class TermsConditions extends StatelessWidget{
+class TermsConditions extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: myTheme,
+      home: TermsConditionsPage(),
+    );
+  }
+}
+
+class TermsConditionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        centerTitle: true,
         title: Text('Terms & Conditions'),
       ),
-      body: _terms(),
+      drawer: myDrawer(),
+      body: Padding(padding: EdgeInsets.all(13.0), child: _terms()),
     );
   }
 }
@@ -32,10 +44,27 @@ Widget _terms() {
     'Governing Law',
     'Independent Legal Advice',
     'Severance',
-
   ];
   final List<String> terms = <String>[
-    '...','...','...','...','...','...','...','...','...','...','...','...','...','...','...','...','...','...','...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
   ];
 
   return ListView.separated(
@@ -45,17 +74,16 @@ Widget _terms() {
         children: <Widget>[
           Align(
             alignment: Alignment.centerLeft,
-            child: Text('${index+1}. ${title[index]}',
-              style: TextStyle(fontWeight: FontWeight.bold,
-              ),
+            child: Text(
+              '${index + 1}. ${title[index]}',
+              style: Theme.of(context).textTheme.subtitle2,
             ),
           ),
           Align(
-            alignment: Alignment.centerLeft,
-            child: Text('${terms[index]}')),
+              alignment: Alignment.centerLeft, child: Text('${terms[index]}')),
         ],
       );
     },
-    separatorBuilder: (BuildContext context, int index) => SizedBox(height: 20),
+    separatorBuilder: (BuildContext context, int index) => SizedBox(height: 5),
   );
 }
