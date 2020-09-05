@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:treiner/Theme/theme.dart';
 
-class Privacy extends StatelessWidget{
+class Privacy extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: myTheme,
+      home: PrivacyPage(),
+    );
+  }
+}
+
+class PrivacyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -8,7 +19,7 @@ class Privacy extends StatelessWidget{
         centerTitle: true,
         title: Text('Privacy Policy'),
       ),
-      body: _privacy(),
+      body: Padding(padding: EdgeInsets.all(13.0), child: _privacy()),
     );
   }
 }
@@ -27,7 +38,16 @@ Widget _privacy() {
     'Website'
   ];
   final List<String> terms = <String>[
-    '...','...','...','...','...','...','...','...','...','...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
+    '...',
   ];
 
   return ListView.separated(
@@ -37,17 +57,16 @@ Widget _privacy() {
         children: <Widget>[
           Align(
             alignment: Alignment.centerLeft,
-            child: Text('${index+1}. ${title[index]}',
-              style: TextStyle(fontWeight: FontWeight.bold,
-              ),
+            child: Text(
+              '${index + 1}. ${title[index]}',
+              style: Theme.of(context).textTheme.subtitle2,
             ),
           ),
           Align(
-              alignment: Alignment.centerLeft,
-              child: Text('${terms[index]}')),
+              alignment: Alignment.centerLeft, child: Text('${terms[index]}')),
         ],
       );
     },
-    separatorBuilder: (BuildContext context, int index) => SizedBox(height: 20),
+    separatorBuilder: (BuildContext context, int index) => SizedBox(height: 5),
   );
 }
