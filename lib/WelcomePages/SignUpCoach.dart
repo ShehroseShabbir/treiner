@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:treiner/Theme/appBar.dart';
 import 'file:///D:/AndroidStudioProjects/treiner/lib/InfoPages/TermsConditions.dart';
 import 'package:treiner/Theme/theme.dart';
@@ -27,6 +29,8 @@ class SignUpCoachPage extends StatelessWidget {
   }
 }
 
+enum Gender { male, female }
+
 class SignUpCoachForm extends StatefulWidget {
   SignUpCoachForm({Key key}) : super(key: key);
 
@@ -39,6 +43,15 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
   bool _isAgreed = false; //Agree to terms and conditions
   DateTime _selectedDOB = DateTime(1900);
   bool _obscureText = true;
+  File _profilePicture;
+  final _picPicker = ImagePicker();
+  Gender _gender = Gender.male;
+
+  Future<Null> getImage() async {
+    final PickedFile pickedFile =
+        await _picPicker.getImage(source: ImageSource.gallery);
+    setState(() => this._profilePicture = File(pickedFile.path));
+  }
 
   TextEditingController _ctrlFirstName = TextEditingController();
   TextEditingController _ctrlLastName = TextEditingController();
@@ -66,9 +79,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
     'Canada'
   ];
   String _selectedCountry;
-
-  List<String> _gender = ['Male', 'Female'];
-  String _selectedGender;
 
   List<String> _businessType = ['Sole Proprietor', 'Other'];
   String _selectedBusinessType;
@@ -128,6 +138,25 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
   ];
   String _selectedSessionType;
 
+  void _termsAgree(){
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text('Alert!'),
+            content: new Text(
+                'You need to agree with terms and condition to proceed'),
+            actions: <Widget>[
+              new RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: new Text('Confirm'),
+              )
+            ],
+          );
+        });}
+
   @override
   void initState() {
     super.initState();
@@ -150,24 +179,27 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
         child: Column(
           children: <Widget>[
             TextFormField(
-                controller: _ctrlFirstName,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.person),
-                  hintText: 'Enter your first name.',
-                  labelText: 'First Name',
-                ),
-                validator: RequiredValidator(
-                    errorText: 'Please enter your first name.')),
+              textCapitalization: TextCapitalization.words,
+              controller: _ctrlFirstName,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.person),
+                hintText: 'Enter your first name.',
+                labelText: 'First Name',
+              ),
+                validator: MultiValidator([RequiredValidator(
+                    errorText: 'Please enter your first name.'),PatternValidator(("[a-zA-Z]"),errorText: 'Text only')])
+            ),
             SizedBox(height: 5),
             TextFormField(
+                textCapitalization: TextCapitalization.words,
                 controller: _ctrlLastName,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   hintText: 'Enter your last name.',
                   labelText: 'Last Name',
                 ),
-                validator: RequiredValidator(
-                    errorText: 'Please enter your last name.')),
+                validator: MultiValidator([RequiredValidator(
+                    errorText: 'Please enter your first name.'),PatternValidator(("[a-zA-Z]"),errorText: 'Text only')])),
             SizedBox(height: 5),
             TextFormField(
               controller: _ctrlDOB,
@@ -191,28 +223,25 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             Row(
               children: <Widget>[
                 Expanded(flex: 1, child: Icon(Icons.change_history)),
-                Expanded(
-                    flex: 2,
-                    child: Text('Gender',
+                Expanded(flex: 2, child: Text('Gender',
                         style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(
-                  flex: 6,
-                  child: DropdownButton(
-                    hint: Text('Select your gender'),
-                    value: _selectedGender,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedGender = newValue;
-                      });
-                    },
-                    items: _gender.map((gender) {
-                      return DropdownMenuItem(
-                        child: new Text(gender),
-                        value: gender,
-                      );
-                    }).toList(),
-                  ),
-                )
+                Expanded(flex: 1,
+                  child: Radio(
+                    value: Gender.male,
+                    groupValue: _gender,
+                    onChanged: (Gender value) {
+                      setState(() => _gender = value
+                      );})),
+                Expanded(flex: 2, child: Text('Male',
+                        style: Theme.of(context).textTheme.subtitle1)),
+                Expanded(flex: 1, child: Radio(
+                        value: Gender.female,
+                        groupValue: _gender,
+                        onChanged: (Gender value) {
+                          setState(() => _gender = value
+                          );})),
+                Expanded(flex: 2, child: Text('Female',
+                        style: Theme.of(context).textTheme.subtitle1)),
               ],
             ),
             SizedBox(height: 5),
@@ -267,13 +296,15 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 hintText: 'Enter your phone number.',
                 labelText: 'Phone Number',
               ),
-              validator: MultiValidator([
-                RequiredValidator(errorText: 'Please enter your phone number.')
-              ]),
+              validator: RequiredValidator(
+                  errorText: 'Please enter your phone number.'),
+              inputFormatters: <TextInputFormatter>[
+                WhitelistingTextInputFormatter.digitsOnly
+              ],
             ),
             SizedBox(height: 5),
             TextFormField(
-              keyboardType: TextInputType.emailAddress,
+                keyboardType: TextInputType.emailAddress,
                 controller: _ctrlEmail,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email),
@@ -286,16 +317,17 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 ])),
             SizedBox(height: 5),
             TextFormField(
-              controller: _ctrlPassword,
-              obscureText: _obscureText,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.lock),
-                hintText: 'Enter password.',
-                labelText: 'Password',
-              ),
-              validator:
+                controller: _ctrlPassword,
+                obscureText: _obscureText,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.lock),
+                  hintText: 'Enter password.',
+                  labelText: 'Password',
+                ),
+                validator: MultiValidator([
                   RequiredValidator(errorText: 'Password can\'t be empty.'),
-            ),
+                  MinLengthValidator(8, errorText: 'Password needs at 8 words.')
+                ])),
             SizedBox(height: 5),
             TextFormField(
               controller: _ctrlCheckPassword,
@@ -333,14 +365,14 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                   hintText: 'Click to select a profile picture.',
                   labelText: 'Profile Picture',
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: () async => await getImage(),
                     icon: Icon(Icons.folder),
                   )),
             ),
             Text(
                 "Upload your profile picture here (Must be under 8 MB, preferably square with a white background. "
-                    "For best results ensure that you are the only person in the photo so as not to confuse potential "
-                    "players.)",
+                "For best results ensure that you are the only person in the photo so as not to confuse potential "
+                "players.)",
                 style: Theme.of(context).textTheme.caption),
             SizedBox(height: 5),
             Row(
@@ -409,7 +441,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                   labelText: 'Licence Number',
                 ),
                 validator: RequiredValidator(
-                    errorText: 'Licence number can\'t be empty.')),
+                    errorText: 'Please enter licence number.')),
             SizedBox(height: 5),
             TextFormField(
                 controller: _ctrlBusiniessNumber,
@@ -420,16 +452,18 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                   labelText: 'Business Number',
                 ),
                 validator: RequiredValidator(
-                    errorText: 'Business number can\'t be empty.')),
+                    errorText: 'Please enter business number.')),
             SizedBox(height: 5),
             TextFormField(
-              controller: _ctrlClub,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.accessibility),
-                hintText: 'Enter the current club or academy that you are at.',
-                labelText: 'Current Club',
-              ),
-            ),
+                controller: _ctrlClub,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.accessibility),
+                  hintText:
+                      'Enter the current club or academy that you are at.',
+                  labelText: 'Current Club',
+                ),
+                validator: RequiredValidator(
+                    errorText: 'Please enter club you are at.')),
             SizedBox(height: 5),
             Row(
               children: <Widget>[
@@ -561,6 +595,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             ),
             SizedBox(height: 5),
             TextFormField(
+              maxLength: 1000,
               controller: _ctrlCoachingSummary,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
@@ -569,12 +604,14 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                     'Summarise your approach to coaching and what motivates you as a coach.',
                 labelText: 'Coaching Summary',
               ),
-              validator: RequiredValidator(errorText: 'Can\'t be empty.'),
+              validator:
+                  RequiredValidator(errorText: 'Please fill up this field.'),
               minLines: 5,
-              maxLines: 100,
+              maxLines: 10,
             ),
             SizedBox(height: 5),
             TextFormField(
+              maxLength: 1000,
               controller: _ctrlCoachingPhilosophy,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
@@ -583,12 +620,14 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                     'Tell us a bit about the philosophy behind your coaching style and what you hope to teach your athletes.',
                 labelText: 'Coaching Philosophy',
               ),
-              validator: RequiredValidator(errorText: 'Can\'t be empty.'),
+              validator:
+                  RequiredValidator(errorText: 'Please fill up this field.'),
               minLines: 5,
-              maxLines: 100,
+              maxLines: 10,
             ),
             SizedBox(height: 5),
             TextFormField(
+              maxLength: 1000,
               controller: _ctrlCareerExperience,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
@@ -597,24 +636,27 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                     'Explain your career with soccer, whether it\'s playing soccer or coaching.',
                 labelText: 'Career Experience',
               ),
-              validator: RequiredValidator(errorText: 'Can\'t be empty.'),
+              validator:
+                  RequiredValidator(errorText: 'Please fill up this field.'),
               minLines: 5,
-              maxLines: 100,
+              maxLines: 10,
             ),
             SizedBox(height: 5),
             TextFormField(
+              maxLength: 1000,
               controller: _ctrlAverageSession,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.assignment),
                 hintText:
                     'What would an average training session be like with you? What should an athlete expect before '
-                        'booking you services?',
+                    'booking you services?',
                 labelText: 'Average Session',
               ),
-              validator: RequiredValidator(errorText: 'Can\'t be empty.'),
+              validator:
+                  RequiredValidator(errorText: 'Please fill up this field.'),
               minLines: 5,
-              maxLines: 100,
+              maxLines: 10,
             ),
             SizedBox(height: 5),
             Row(
@@ -656,17 +698,19 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             ),
             SizedBox(height: 5),
             RaisedButton(
-              onPressed: () {
-                // Validate will return true if the form is valid, or false if
-                // the form is invalid.
-                if (_formKey.currentState.validate()) {
-                  // Process data.
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                }
-              },
-              child: Text('Register'),
-            )
+                child: Text('Register'),
+                onPressed: () {
+                  // Validate will return true if the form is valid, or false if
+                  // the form is invalid.
+                  if (_formKey.currentState.validate()) {
+                    _isAgreed?
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TermsConditions()))
+                        : _termsAgree();
+                  }}
+            ),
           ],
         ),
       ),
