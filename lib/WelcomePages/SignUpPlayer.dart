@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:treiner/Theme/appBar.dart';
 import 'file:///D:/AndroidStudioProjects/treiner/lib/InfoPages/TermsConditions.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -43,12 +44,8 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
   bool _obscureText = true;
   Gender _gender = Gender.male;
 
-  TextEditingController _ctrlFirstName = TextEditingController();
-  TextEditingController _ctrlLastName = TextEditingController();
-  TextEditingController _ctrlEmail = TextEditingController();
   TextEditingController _ctrlDOB = TextEditingController();
   TextEditingController _ctrlPassword = TextEditingController();
-  TextEditingController _ctrlCheckPassword = TextEditingController();
 
   List<String> _country = [
     'Australia',
@@ -60,55 +57,37 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
   ];
   String _selectedCountry;
 
-  void _showDialog() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text('Alert!'),
-            content: new Text(
-                'You must be over the age of 16 to create a Treiner player account. Otherwise, a '
-                    'parent or gaurdian must create your account.'),
-            actions: <Widget>[
-              new RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: new Text('Close'),
-              )
-            ],
-          );
-        });
+  Future<void> _termsAgree() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Alet'),
+          content:
+              Text('You need to agree with terms and condition to proceed'),
+          actions: <Widget>[
+            RaisedButton(
+              child: Text('Confirm'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  void _termsAgree(){
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text('Alert!'),
-            content: new Text(
-                'You need to agree with terms and condition to proceed'),
-            actions: <Widget>[
-              new RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: new Text('Confirm'),
-              )
-            ],
-          );
-});}
+  void _toggle() {
+    //password eye icon
+    setState(() {
+      _obscureText = !_obscureText;
+      print(_obscureText);
+    });
+  }
 
   Widget build(BuildContext context) {
-    void _toggle() {
-      //password eye icon
-      setState(() {
-        _obscureText = !_obscureText;
-        print(_obscureText);
-      });
-    }
-
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
@@ -116,31 +95,29 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
           children: <Widget>[
             TextFormField(
                 textCapitalization: TextCapitalization.words,
-                controller: _ctrlFirstName,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   hintText: 'Enter your first name.',
                   labelText: 'First Name',
                 ),
-                validator: MultiValidator([RequiredValidator(
-                    errorText: 'Please enter your first name.'),
-                  PatternValidator(("[a-zA-Z]"),errorText: 'Text only')])
-            ),
+                validator: MultiValidator([
+                  RequiredValidator(errorText: 'Please enter your first name.'),
+                  PatternValidator(("[a-zA-Z]"), errorText: 'Text only')
+                ])),
             SizedBox(height: 5),
             TextFormField(
                 textCapitalization: TextCapitalization.words,
-                controller: _ctrlLastName,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   hintText: 'Enter your last name.',
                   labelText: 'Last Name',
                 ),
-                validator: MultiValidator([RequiredValidator(
-                    errorText: 'Please enter your first name.'),
-                  PatternValidator(("[a-zA-Z]"),errorText: 'Text only')])),
+                validator: MultiValidator([
+                  RequiredValidator(errorText: 'Please enter your first name.'),
+                  PatternValidator(("[a-zA-Z]"), errorText: 'Text only')
+                ])),
             SizedBox(height: 5),
             TextFormField(
-                controller: _ctrlEmail,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   hintText: 'Enter your email address.',
@@ -153,54 +130,70 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
                 ])),
             SizedBox(height: 5),
             TextFormField(
+              readOnly: true,
               controller: _ctrlDOB,
-              onTap: () {
-                // Below line stops keyboard from appearing
-                FocusScope.of(context).requestFocus(new FocusNode());
-                _showDialog();
-              },
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.cake),
                 hintText: 'Select your date of birth.',
                 labelText: 'Date Of Birth',
                 suffixIcon: IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    DateTime date = DateTime.now();
+                    date = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime(2000),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(DateTime.now().year - 16));
+                    _ctrlDOB.text = Jiffy(date).yMMMMd;
+                  },
                   icon: Icon(Icons.calendar_today),
                 ),
               ),
-
+              validator:
+                  RequiredValidator(errorText: 'Please select date of birth.'),
             ),
             SizedBox(height: 5),
             Row(
               children: <Widget>[
                 Expanded(flex: 1, child: Icon(Icons.change_history)),
-                Expanded(flex: 2, child: Text('Gender',
-                    style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(flex: 1,
+                Expanded(
+                    flex: 2,
+                    child: Text('Gender',
+                        style: Theme.of(context).textTheme.subtitle1)),
+                Expanded(
+                    flex: 1,
                     child: Radio(
                         value: Gender.male,
                         groupValue: _gender,
                         onChanged: (Gender value) {
-                          setState(() => _gender = value
-                          );})),
-                Expanded(flex: 2, child: Text('Male',
-                    style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(flex: 1, child: Radio(
-                    value: Gender.female,
-                    groupValue: _gender,
-                    onChanged: (Gender value) {
-                      setState(() => _gender = value
-                      );})),
-                Expanded(flex: 2, child: Text('Female',
-                    style: Theme.of(context).textTheme.subtitle1)),
+                          setState(() => _gender = value);
+                        })),
+                Expanded(
+                    flex: 2,
+                    child: Text('Male',
+                        style: Theme.of(context).textTheme.subtitle1)),
+                Expanded(
+                    flex: 1,
+                    child: Radio(
+                        value: Gender.female,
+                        groupValue: _gender,
+                        onChanged: (Gender value) {
+                          setState(() => _gender = value);
+                        })),
+                Expanded(
+                    flex: 2,
+                    child: Text('Female',
+                        style: Theme.of(context).textTheme.subtitle1)),
               ],
             ),
             SizedBox(height: 5),
             Row(
               children: <Widget>[
                 Expanded(flex: 1, child: Icon(Icons.location_city)),
-                Expanded(flex: 2, child: Text('Country',
-                    style: Theme.of(context).textTheme.subtitle1)),
+                Expanded(
+                    flex: 2,
+                    child: Text('Country',
+                        style: Theme.of(context).textTheme.subtitle1)),
                 Expanded(
                   flex: 6,
                   child: DropdownButton(
@@ -223,20 +216,19 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
             ),
             SizedBox(height: 5),
             TextFormField(
-              controller: _ctrlPassword,
-              obscureText: _obscureText,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.lock),
-                hintText: 'Enter password.',
-                labelText: 'Password',
-              ),
-              validator: MultiValidator([RequiredValidator(errorText: 'Password can\'t be empty.'),
-                MinLengthValidator(8,errorText: 'Password needs at 8 words.')
-              ])
-            ),
+                controller: _ctrlPassword,
+                obscureText: _obscureText,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.lock),
+                  hintText: 'Enter password.',
+                  labelText: 'Password',
+                ),
+                validator: MultiValidator([
+                  RequiredValidator(errorText: 'Password can\'t be empty.'),
+                  MinLengthValidator(8, errorText: 'Password needs at 8 words.')
+                ])),
             SizedBox(height: 5),
             TextFormField(
-              controller: _ctrlCheckPassword,
               obscureText: _obscureText,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock),
@@ -299,19 +291,19 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
             ),
             SizedBox(height: 5),
             RaisedButton(
-              child: Text('Register'),
-              onPressed: () {
-                // Validate will return true if the form is valid, or false if
-                // the form is invalid.
-                if (_formKey.currentState.validate()) {
-                   _isAgreed?
-                   Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                           builder: (context) => TermsConditions()))
-                  : _termsAgree();
-                      }}
-            ),
+                child: Text('Register'),
+                onPressed: () {
+                  // Validate will return true if the form is valid, or false if
+                  // the form is invalid.
+                  if (_formKey.currentState.validate()) {
+                    _isAgreed
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TermsConditions()))
+                        : _termsAgree();
+                  }
+                }),
           ],
         ),
       ),

@@ -16,9 +16,43 @@ class SignUp extends StatelessWidget {
     );
   }
 }
+
+
+
 class SignUpPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    Future<void> _ageConfirm() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Alet'),
+            content: Text(
+                'You must be over the age of 16 to create a Treiner player account. Otherwise, a '
+                    'parent or gaurdian must create your account.'),
+            actions: <Widget>[
+              RaisedButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              RaisedButton(
+                child: Text('I am over 16'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => SignUpPlayer()));
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text('Register'),),
@@ -35,8 +69,7 @@ class SignUpPage extends StatelessWidget {
                   flex: 1,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => SignUpPlayer()));
+                      _ageConfirm();
                     },
                     child: Image.asset('assets/imgs/player.png'),
                   ),

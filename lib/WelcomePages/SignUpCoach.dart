@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:treiner/Theme/appBar.dart';
 import 'file:///D:/AndroidStudioProjects/treiner/lib/InfoPages/TermsConditions.dart';
 import 'package:treiner/Theme/theme.dart';
@@ -53,22 +54,9 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
     setState(() => this._profilePicture = File(pickedFile.path));
   }
 
-  TextEditingController _ctrlFirstName = TextEditingController();
-  TextEditingController _ctrlLastName = TextEditingController();
-  TextEditingController _ctrlEmail = TextEditingController();
   TextEditingController _ctrlDOB = TextEditingController();
   TextEditingController _ctrlPassword = TextEditingController();
-  TextEditingController _ctrlCheckPassword = TextEditingController();
-  TextEditingController _ctrlTown = TextEditingController();
-  TextEditingController _ctrlPhone = TextEditingController();
-  TextEditingController _ctrlBusiniessNumber = TextEditingController();
-  TextEditingController _ctrlLicenceNumber = TextEditingController();
-  TextEditingController _ctrlClub = TextEditingController();
   TextEditingController _ctrlCoachingYear = TextEditingController();
-  TextEditingController _ctrlCoachingSummary = TextEditingController();
-  TextEditingController _ctrlCoachingPhilosophy = TextEditingController();
-  TextEditingController _ctrlCareerExperience = TextEditingController();
-  TextEditingController _ctrlAverageSession = TextEditingController();
 
   List<String> _country = [
     'Australia',
@@ -138,24 +126,27 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
   ];
   String _selectedSessionType;
 
-  void _termsAgree(){
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text('Alert!'),
-            content: new Text(
-                'You need to agree with terms and condition to proceed'),
-            actions: <Widget>[
-              new RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: new Text('Confirm'),
-              )
-            ],
-          );
-        });}
+  Future<void> _termsAgree() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Alet'),
+          content:
+              Text('You need to agree with terms and condition to proceed'),
+          actions: <Widget>[
+            RaisedButton(
+              child: Text('Confirm'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -179,27 +170,28 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
         child: Column(
           children: <Widget>[
             TextFormField(
-              textCapitalization: TextCapitalization.words,
-              controller: _ctrlFirstName,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.person),
-                hintText: 'Enter your first name.',
-                labelText: 'First Name',
-              ),
-                validator: MultiValidator([RequiredValidator(
-                    errorText: 'Please enter your first name.'),PatternValidator(("[a-zA-Z]"),errorText: 'Text only')])
-            ),
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.person),
+                  hintText: 'Enter your first name.',
+                  labelText: 'First Name',
+                ),
+                validator: MultiValidator([
+                  RequiredValidator(errorText: 'Please enter your first name.'),
+                  PatternValidator(("[a-zA-Z]"), errorText: 'Text only')
+                ])),
             SizedBox(height: 5),
             TextFormField(
                 textCapitalization: TextCapitalization.words,
-                controller: _ctrlLastName,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   hintText: 'Enter your last name.',
                   labelText: 'Last Name',
                 ),
-                validator: MultiValidator([RequiredValidator(
-                    errorText: 'Please enter your first name.'),PatternValidator(("[a-zA-Z]"),errorText: 'Text only')])),
+                validator: MultiValidator([
+                  RequiredValidator(errorText: 'Please enter your first name.'),
+                  PatternValidator(("[a-zA-Z]"), errorText: 'Text only')
+                ])),
             SizedBox(height: 5),
             TextFormField(
               controller: _ctrlDOB,
@@ -212,7 +204,15 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 hintText: 'Select your date of birth.',
                 labelText: 'Date Of Birth',
                 suffixIcon: IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    DateTime date = DateTime.now();
+                    date = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime(2000),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(DateTime.now().year - 16));
+                    _ctrlDOB.text = Jiffy(date).yMMMMd;
+                  },
                   icon: Icon(Icons.calendar_today),
                 ),
               ),
@@ -223,24 +223,33 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             Row(
               children: <Widget>[
                 Expanded(flex: 1, child: Icon(Icons.change_history)),
-                Expanded(flex: 2, child: Text('Gender',
+                Expanded(
+                    flex: 2,
+                    child: Text('Gender',
                         style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(flex: 1,
-                  child: Radio(
-                    value: Gender.male,
-                    groupValue: _gender,
-                    onChanged: (Gender value) {
-                      setState(() => _gender = value
-                      );})),
-                Expanded(flex: 2, child: Text('Male',
+                Expanded(
+                    flex: 1,
+                    child: Radio(
+                        value: Gender.male,
+                        groupValue: _gender,
+                        onChanged: (Gender value) {
+                          setState(() => _gender = value);
+                        })),
+                Expanded(
+                    flex: 2,
+                    child: Text('Male',
                         style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(flex: 1, child: Radio(
+                Expanded(
+                    flex: 1,
+                    child: Radio(
                         value: Gender.female,
                         groupValue: _gender,
                         onChanged: (Gender value) {
-                          setState(() => _gender = value
-                          );})),
-                Expanded(flex: 2, child: Text('Female',
+                          setState(() => _gender = value);
+                        })),
+                Expanded(
+                    flex: 2,
+                    child: Text('Female',
                         style: Theme.of(context).textTheme.subtitle1)),
               ],
             ),
@@ -274,7 +283,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             ),
             SizedBox(height: 5),
             TextFormField(
-              controller: _ctrlTown,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.home),
                 hintText: 'Enter the town or suburb where you are based.',
@@ -290,7 +298,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             SizedBox(height: 5),
             TextFormField(
               keyboardType: TextInputType.number,
-              controller: _ctrlPhone,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.phone),
                 hintText: 'Enter your phone number.',
@@ -305,7 +312,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             SizedBox(height: 5),
             TextFormField(
                 keyboardType: TextInputType.emailAddress,
-                controller: _ctrlEmail,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   hintText: 'Enter your email.',
@@ -330,7 +336,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 ])),
             SizedBox(height: 5),
             TextFormField(
-              controller: _ctrlCheckPassword,
               obscureText: _obscureText,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock),
@@ -434,7 +439,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             ),
             SizedBox(height: 5),
             TextFormField(
-                controller: _ctrlLicenceNumber,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.assignment),
                   hintText: 'Enter your working with children licence number.',
@@ -444,7 +448,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                     errorText: 'Please enter licence number.')),
             SizedBox(height: 5),
             TextFormField(
-                controller: _ctrlBusiniessNumber,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.assignment),
                   hintText:
@@ -455,7 +458,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                     errorText: 'Please enter business number.')),
             SizedBox(height: 5),
             TextFormField(
-                controller: _ctrlClub,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.accessibility),
                   hintText:
@@ -596,7 +598,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             SizedBox(height: 5),
             TextFormField(
               maxLength: 1000,
-              controller: _ctrlCoachingSummary,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.assignment),
@@ -612,7 +613,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             SizedBox(height: 5),
             TextFormField(
               maxLength: 1000,
-              controller: _ctrlCoachingPhilosophy,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.assignment),
@@ -628,7 +628,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             SizedBox(height: 5),
             TextFormField(
               maxLength: 1000,
-              controller: _ctrlCareerExperience,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.assignment),
@@ -644,7 +643,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             SizedBox(height: 5),
             TextFormField(
               maxLength: 1000,
-              controller: _ctrlAverageSession,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.assignment),
@@ -703,14 +701,14 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                   // Validate will return true if the form is valid, or false if
                   // the form is invalid.
                   if (_formKey.currentState.validate()) {
-                    _isAgreed?
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TermsConditions()))
+                    _isAgreed
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TermsConditions()))
                         : _termsAgree();
-                  }}
-            ),
+                  }
+                }),
           ],
         ),
       ),
