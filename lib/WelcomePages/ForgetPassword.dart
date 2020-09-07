@@ -80,7 +80,6 @@ class EmailForm extends StatefulWidget {
 
 class _EmailFormState extends State<EmailForm> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _ctrlEmail = TextEditingController();
 
   Widget build(BuildContext context) {
     return Form(
@@ -88,7 +87,7 @@ class _EmailFormState extends State<EmailForm> {
       child: Column(
         children: <Widget>[
           TextFormField(
-              controller: _ctrlEmail,
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.email),
                   hintText: 'Enter your email address.', labelText: 'Email'),

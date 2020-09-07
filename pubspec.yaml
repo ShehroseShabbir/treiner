@@ -21,11 +21,13 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  jiffy: ^3.0.1
-  image_picker: ^0.6.7+7
+  youtube_player_flutter: ^7.0.0+7   #  youtude player
+  flutter_svg: ^0.18.1   #  svg pictures
+  jiffy: ^3.0.1   #  DateTime editor
+  image_picker: ^0.6.7+7   #  Uploading pictures from devices
   form_field_validator: ^1.0.1
-  animated_text_kit: ^2.2.0
-  flutter_auth_buttons: ^0.9.0
+  animated_text_kit: ^2.2.0   #  splash screen
+  flutter_auth_buttons: ^0.9.0   #  facebook, google official buttons
   flutter:
     sdk: flutter
 
