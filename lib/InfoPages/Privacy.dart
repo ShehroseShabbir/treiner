@@ -21,54 +21,52 @@ class PrivacyPage extends StatelessWidget {
         title: Text('Privacy Policy'),
       ),
       drawer: myDrawer(),
-      body: Padding(padding: EdgeInsets.all(13.0), child: _privacy()),
+      body: Padding(padding: EdgeInsets.all(13.0), child: PrivacyList()),
     );
   }
 }
 
-Widget _privacy() {
-  final List<String> title = <String>[
-    'We respect your privacy',
-    'Collection of personal information',
-    'How we collect your personal information',
-    'Use of your personal information',
-    'Disclosure of your personal information',
-    'Security of your personal information',
-    'Access to your personal information',
-    'Complaints about privacy',
-    'Changes to Privacy Policy',
-    'Website'
-  ];
-  final List<String> terms = <String>[
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-  ];
+class PrivacyDetails {
+  PrivacyDetails({this.title, this.desc});
 
-  return ListView.separated(
-    itemCount: title.length,
-    itemBuilder: (BuildContext context, int index) {
-      return Column(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              '${index + 1}. ${title[index]}',
+  String title;
+  String desc;
+}
+class PrivacyList extends StatelessWidget{
+List<PrivacyDetails> privacys = [
+  PrivacyDetails(title: 'We respect your privacy', desc: '...'),
+  PrivacyDetails(title: 'Collection of personal information', desc: '...'),
+  PrivacyDetails(
+      title: 'How we collect your personal information', desc: '...'),
+  PrivacyDetails(title: 'Use of your personal information', desc: '...'),
+  PrivacyDetails(title: 'Disclosure of your personal information', desc: '...'),
+  PrivacyDetails(title: 'Security of your personal information', desc: '...'),
+  PrivacyDetails(title: 'Access to your personal information', desc: '...'),
+  PrivacyDetails(title: 'Complaints about privacy', desc: '...'),
+  PrivacyDetails(title: 'Changes to Privacy Policy', desc: '...'),
+  PrivacyDetails(title: 'Website', desc: '...')
+];
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: privacys.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Column(
+          children: <Widget>[
+            Text(
+              '${index + 1}. ${privacys[index].title}',
+              textAlign: TextAlign.left,
               style: Theme.of(context).textTheme.subtitle2,
             ),
-          ),
-          Align(
-              alignment: Alignment.centerLeft, child: Text('${terms[index]}')),
-        ],
-      );
-    },
-    separatorBuilder: (BuildContext context, int index) => SizedBox(height: 5),
-  );
+            Text(
+              '${privacys[index].desc}',
+              textAlign: TextAlign.left,
+            ),
+          ],
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) => SizedBox(height: 5),
+    );
+  }
 }

@@ -20,70 +20,57 @@ class TermsConditionsPage extends StatelessWidget {
         title: Text('Terms & Conditions'),
       ),
       drawer: myDrawer(),
-      body: Padding(padding: EdgeInsets.all(13.0), child: _terms()),
+      body: Padding(padding: EdgeInsets.all(13.0), child: TermList()),
     );
   }
 }
 
-Widget _terms() {
-  final List<String> title = <String>[
-    'About the Website',
-    'Acceptance of the Terms',
-    'Registration to use the Services',
-    'Your obligations as a Member',
-    'Payment',
-    'Refund Policy',
-    'Copyright and Intellectual Property',
-    'Privacy',
-    'General Disclaimer',
-    'Limitation of liability',
-    'Termination of Contract',
-    'Indemnity',
-    'Dispute Resolution',
-    'Venue and Jurisdiction',
-    'Governing Law',
-    'Independent Legal Advice',
-    'Severance',
-  ];
-  final List<String> terms = <String>[
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
-    '...',
+class Term {
+  Term({this.title, this.desc});
+
+  String title;
+  String desc;
+}
+
+class TermList extends StatelessWidget {
+  final List<Term> terms = [
+    Term(title: 'About the Website', desc: '...'),
+    Term(title: 'Acceptance of the Terms', desc: '...'),
+    Term(title: 'Registration to use the Services', desc: '...'),
+    Term(title: 'Your obligations as a Member', desc: '...'),
+    Term(title: 'Payment', desc: '...'),
+    Term(title: 'Refund Policy', desc: '...'),
+    Term(title: 'Copyright and Intellectual Property', desc: '...'),
+    Term(title: 'Privacy', desc: '...'),
+    Term(title: 'General Disclaimer', desc: '...'),
+    Term(title: 'Limitation of liability', desc: '...'),
+    Term(title: 'Termination of Contract', desc: '...'),
+    Term(title: 'Indemnity', desc: '...'),
+    Term(title: 'Dispute Resolution', desc: '...'),
+    Term(title: 'Venue and Jurisdiction', desc: '...'),
+    Term(title: 'Governing Law', desc: '...'),
+    Term(title: 'Independent Legal Advice', desc: '...'),
+    Term(title: 'Severance', desc: '...'),
   ];
 
-  return ListView.separated(
-    itemCount: title.length,
-    itemBuilder: (BuildContext context, int index) {
-      return Column(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              '${index + 1}. ${title[index]}',
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: terms.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Column(
+          children: <Widget>[
+            Text(
+              '${index + 1}. ${terms[index].title}',
+              textAlign: TextAlign.left,
               style: Theme.of(context).textTheme.subtitle2,
             ),
-          ),
-          Align(
-              alignment: Alignment.centerLeft, child: Text('${terms[index]}')),
-        ],
-      );
-    },
-    separatorBuilder: (BuildContext context, int index) => SizedBox(height: 5),
-  );
+            Text('${terms[index].desc}', textAlign: TextAlign.left),
+          ],
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) =>
+          SizedBox(height: 5),
+    );
+  }
 }
