@@ -37,3 +37,18 @@ class Coach {
       this.location_id,
       {this.coachID});
 }
+
+class JobOffer {
+  final String id;
+  final String coach_id;
+  final String job_post_id;
+  final String location_id;
+  final String content;
+  final String fee;
+  final String status;
+  final String created_at;
+  final String updated_at;
+
+  JobOffer(this.id, this.coach_id, this.job_post_id, this.location_id,
+      this.content, this.fee, this.status, this.created_at, this.updated_at);
+}
