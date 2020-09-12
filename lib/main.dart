@@ -13,6 +13,7 @@ import 'package:treiner/home.dart';
 import 'Coach/coach_offers.dart';
 import 'Player/player_book.dart';
 import 'Sessions/session_main.dart';
+import "Theme/theme.dart";
 
 void main() => runApp(MyApp());
 
@@ -21,13 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
-          primaryColor: Color(0xFF006944),
-          dialogBackgroundColor: Colors.white,
-          colorScheme: ColorScheme.light(primary: const Color(0xFF006944)),
-          buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
-          highlightColor: Colors.grey[400],
-          textSelectionColor: Colors.grey),
+      theme: myTheme,
       home: LandingPage(),
       initialRoute: '/',
       routes: {
