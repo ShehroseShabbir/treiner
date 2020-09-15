@@ -4,6 +4,8 @@ import 'package:treiner/Theme/theme.dart';
 import 'package:treiner/WelcomePages/Login.dart';
 import 'dart:async';
 
+import 'package:treiner/WelcomePages/home.dart';
+
 class SplashScreen extends StatefulWidget {
   _SpashScreenState createState() => _SpashScreenState();
 }
@@ -14,7 +16,7 @@ class _SpashScreenState extends State<SplashScreen> {
     Timer(
         Duration(seconds: 5),
         () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => LoginPage())));
+            MaterialPageRoute(builder: (BuildContext context) => Home())));
   }
 
   Widget build(BuildContext context) {

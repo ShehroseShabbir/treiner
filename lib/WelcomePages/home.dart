@@ -1,10 +1,12 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:treiner/Theme/theme.dart';
 import 'package:treiner/Theme/appBar.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'SignUp.dart';
@@ -39,6 +41,7 @@ class HomePage extends StatelessWidget {
                 Video(),
                 _howWork(),
                 Subscribe(),
+                Bottombar()
               ],
             ),
           ),
@@ -144,34 +147,32 @@ Widget _middle(Options) {
 
 Widget _howWork() {
   return Center(
-    child: Expanded(
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 40),
-            Text('How Treiner Works',
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  wordSpacing: 0.1,
-                )),
-            SizedBox(height: 20),
-            Divider(thickness: 3),
-            SizedBox(height: 20),
-            Text(
-                "Treiner is the most convenient way to book an expert, safe and experienced soccer coaching professional within your area, budget and availability. Treiner is the only soccer-specific coach booking platform in Australia and looks to focus on the holistic development of players, offering not only personal soccer coaches but also those with expertise in futsal, goalkeeping, position specific training, video analysis, and more.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w200,
-                  wordSpacing: 2,
-                )),
-            SizedBox(height: 40)
-          ],
-        ),
+    child: Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 40),
+          Text('How Treiner Works',
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                wordSpacing: 0.1,
+              )),
+          SizedBox(height: 20),
+          Divider(thickness: 3),
+          SizedBox(height: 20),
+          Text(
+              "Treiner is the most convenient way to book an expert, safe and experienced soccer coaching professional within your area, budget and availability. Treiner is the only soccer-specific coach booking platform in Australia and looks to focus on the holistic development of players, offering not only personal soccer coaches but also those with expertise in futsal, goalkeeping, position specific training, video analysis, and more.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 14,
+                fontWeight: FontWeight.w200,
+                wordSpacing: 2,
+              )),
+          SizedBox(height: 40)
+        ],
       ),
     ),
   );
@@ -183,7 +184,7 @@ class Video extends StatefulWidget {
 
 class _videoState extends State<Video> {
   YoutubePlayerController _ctrlVideo =
-      YoutubePlayerController(initialVideoId: 'yVJ2qrYVth4');
+  YoutubePlayerController(initialVideoId: 'yVJ2qrYVth4');
 
   @override
   void initState() {
@@ -198,7 +199,7 @@ class _videoState extends State<Video> {
         showVideoProgressIndicator: true,
       ),
       builder: (context, player) {
-        return Expanded(child: player);
+        return player;
       },
     );
   }
@@ -265,6 +266,81 @@ class _subscribeState extends State<Subscribe> {
               // TODO: Subscribe button
             },
           )
+        ],
+      ),
+    );
+  }
+}
+
+class SocialBtn {
+  const SocialBtn(this.icon, this.url);
+
+  final Icon icon;
+  final String url;
+}
+
+SocialBtn _facebook = SocialBtn(const Icon(FontAwesome.facebook_square
+    , color: Color(0xff006944)), 'https://www.facebook.com/treiner.co');
+
+SocialBtn _linkedin = SocialBtn(const Icon(FontAwesome
+    .linkedin_square, color: Color(0xff006944),), 'https://www.linkedin.com/company/treiner');
+
+SocialBtn _twitter = SocialBtn(const Icon(
+    FontAwesome.twitter, color: Color(0xff006944)), 'https://twitter.com/treinerco');
+
+SocialBtn _instagram = SocialBtn(const Icon(
+    FontAwesome.instagram, color: Color(0xff006944)), 'https://www.instagram.com/treiner.co');
+
+class SocialButton extends StatefulWidget {
+  _SocialButtonState createState() => _SocialButtonState();
+}
+
+class _SocialButtonState extends State<SocialButton> {
+
+  final List<SocialBtn> social = <SocialBtn>[
+    _facebook,
+    _linkedin,
+    _twitter,
+    _instagram
+  ];
+
+  _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not connect';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: social.length,
+        itemBuilder: (context, index){
+          return Container(
+            width: 30,
+            child: IconButton(
+              icon: social[index].icon,
+              onPressed: () => _launchURL(social[index].url),
+            ),
+          );
+        });
+  }
+}
+
+class Bottombar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.grey.shade200,
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      child: Row(
+        children: [
+          Expanded(flex: 7,child: Text('Copyright © 2020. All Rights Reserved')),
+          Expanded(flex: 4,child: SocialButton()),
         ],
       ),
     );

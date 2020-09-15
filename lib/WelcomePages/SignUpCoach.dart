@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jiffy/jiffy.dart';
@@ -222,7 +223,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
             SizedBox(height: 5),
             Row(
               children: <Widget>[
-                Expanded(flex: 1, child: Icon(Icons.change_history)),
+                Expanded(flex: 1, child: Icon(FontAwesome.intersex)),
                 Expanded(
                     flex: 2,
                     child: Text('Gender',
@@ -332,7 +333,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 ),
                 validator: MultiValidator([
                   RequiredValidator(errorText: 'Password can\'t be empty.'),
-                  MinLengthValidator(8, errorText: 'Password needs at 8 words.')
+                  MinLengthValidator(8, errorText: 'Please lengthen password to 8 characters or more.')
                 ])),
             SizedBox(height: 5),
             TextFormField(
