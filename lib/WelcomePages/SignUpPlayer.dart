@@ -279,9 +279,7 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
                 RichText(
                   text: TextSpan(
                       text: 'terms and conditions',
-                      style: Theme.of(context).textTheme.bodyText2.merge(
-                          TextStyle(
-                              color: tGreen, fontWeight: FontWeight.w500)),
+                      style: Theme.of(context).textTheme.bodyText2.merge(TextStyle(color: tGreen)),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           Navigator.push(

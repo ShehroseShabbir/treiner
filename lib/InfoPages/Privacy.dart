@@ -53,6 +53,7 @@ List<PrivacyDetails> privacys = [
       itemCount: privacys.length,
       itemBuilder: (BuildContext context, int index) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               '${index + 1}. ${privacys[index].title}',
@@ -66,7 +67,7 @@ List<PrivacyDetails> privacys = [
           ],
         );
       },
-      separatorBuilder: (BuildContext context, int index) => SizedBox(height: 5),
+      separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10),
     );
   }
 }

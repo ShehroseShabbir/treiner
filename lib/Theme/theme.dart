@@ -63,7 +63,6 @@ final ThemeData myTheme = ThemeData(
       color: Colors.black87,
       fontSize: 28,
       fontWeight: FontWeight.w100,
-      fontStyle: FontStyle.italic,
       wordSpacing: 0.1,
     ),
     headline3: TextStyle(
@@ -71,11 +70,11 @@ final ThemeData myTheme = ThemeData(
       fontSize: 24,
       fontWeight: FontWeight.bold,
       wordSpacing: 0.1,
+      letterSpacing: 0.5,
     ),
     headline4: TextStyle(
       color: Colors.black87,
       fontSize: 20,
-      fontStyle: FontStyle.italic,
       fontWeight: FontWeight.w100,
       wordSpacing: 0.1,
     ),
@@ -99,14 +98,14 @@ final ThemeData myTheme = ThemeData(
       color: Colors.black87,
       fontSize: 12,
       fontWeight: FontWeight.w200,
-      fontStyle: FontStyle.italic,
       wordSpacing: 1,
     ),
     bodyText2: TextStyle( //Text without theme
       color: Colors.black87,
-      fontSize: 12,
+      fontSize: 14,
       fontWeight: FontWeight.w200,
-      wordSpacing: 1,
+      wordSpacing: 2,
+      letterSpacing: 0.5
     ),
     caption:TextStyle(
       color: Colors.grey.shade600,

@@ -59,6 +59,7 @@ class TermList extends StatelessWidget {
       itemCount: terms.length,
       itemBuilder: (BuildContext context, int index) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               '${index + 1}. ${terms[index].title}',
@@ -70,7 +71,7 @@ class TermList extends StatelessWidget {
         );
       },
       separatorBuilder: (BuildContext context, int index) =>
-          SizedBox(height: 5),
+          SizedBox(height: 10),
     );
   }
 }

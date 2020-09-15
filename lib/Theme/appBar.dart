@@ -5,12 +5,12 @@ import 'package:treiner/InfoPages/Privacy.dart';
 import 'package:treiner/InfoPages/Sessions.dart';
 import 'file:///D:/AndroidStudioProjects/treiner/lib/InfoPages/ContactUs.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:treiner/InfoPages/TermsConditions.dart';
 import 'package:treiner/Theme/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget myAppBar(String title) {
-  return Scaffold(
-    appBar: AppBar(
+  return AppBar(
       centerTitle: true,
       title: Text(
         title,
@@ -19,7 +19,6 @@ Widget myAppBar(String title) {
           fontWeight: FontWeight.w500,
         ),
       ),
-    ),
   );
 }
 
@@ -46,6 +45,11 @@ class myDrawer extends StatelessWidget {
             title: Text('Privacy'),
             onTap: () => Navigator.push(
                 context, MaterialPageRoute(builder: (context) => Privacy())),
+          ),
+          ListTile(
+            title: Text('Terms & Conditions'),
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => TermsConditions())),
           ),
           ListTile(
             title: Text('About Treiner'),
@@ -79,8 +83,8 @@ class SocialBtn {
   final String url;
 }
 
-SocialBtn _facebook = SocialBtn(const Icon(MaterialCommunityIcons
-    .facebook, color: Color(0xff006944)), 'https://www.facebook.com/treiner.co');
+SocialBtn _facebook = SocialBtn(const Icon(FontAwesome.facebook_square
+    , color: Color(0xff006944)), 'https://www.facebook.com/treiner.co');
 
 SocialBtn _linkedin = SocialBtn(const Icon(FontAwesome
     .linkedin_square, color: Color(0xff006944),), 'https://www.linkedin.com/company/treiner');
@@ -115,27 +119,34 @@ class _SocialButtonState extends State<SocialButton> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemCount: social.length,
         itemBuilder: (context, index){
-          return IconButton(
-            icon: social[index].icon,
-            onPressed: () => _launchURL(social[index].url),
+          return Container(
+            width: 30,
+            child: IconButton(
+              icon: social[index].icon,
+              onPressed: () => _launchURL(social[index].url),
+            ),
           );
         });
   }
 }
 
-class Buttombar extends StatelessWidget {
+class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey.shade200,
       width: MediaQuery.of(context).size.width,
+      height: 30,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Expanded(child: Text('Copyright © 2020. All Rights Reserved')),
-          Expanded(child: SocialButton()),
+          Expanded(flex: 7,child: Text('Copyright © 2020. All Rights Reserved', style: Theme.of(context).textTheme.caption,)),
+          Expanded(flex: 4,child: SocialButton()),
         ],
       ),
     );

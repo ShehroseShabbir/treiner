@@ -684,7 +684,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 RichText(
                   text: TextSpan(
                       text: 'terms and conditions',
-                      style: TextStyle(color: tGreen),
+                      style: Theme.of(context).textTheme.bodyText2.merge(TextStyle(color: tGreen)),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           Navigator.push(

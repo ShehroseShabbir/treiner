@@ -4,4 +4,4 @@ import 'package:treiner/WelcomePages/home.dart';
 
 import 'Testing/classtest.dart';
 
-void main() => runApp(MaterialApp(theme: myTheme,home: Home()));
+void main() => runApp(MaterialApp(theme: myTheme,home: test()));

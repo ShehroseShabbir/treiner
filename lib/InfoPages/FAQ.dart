@@ -18,7 +18,7 @@ class FAQPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Privacy Policy'),
+        title: Text('F&Qs'),
       ),
       drawer: myDrawer(),
       body: Padding(padding: EdgeInsets.all(13.0), child: FaqList()),
@@ -84,6 +84,7 @@ class FaqList extends StatelessWidget {
       itemCount: faqs.length,
       itemBuilder: (BuildContext context, int index) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               '${faqs[index].question}',
@@ -103,7 +104,7 @@ class FaqList extends StatelessWidget {
         );
       },
       separatorBuilder: (BuildContext context, int index) =>
-          SizedBox(height: 5),
+          SizedBox(height: 10),
     );
   }
 }
