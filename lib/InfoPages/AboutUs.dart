@@ -58,6 +58,7 @@ class AboutUsPage extends StatelessWidget {
                   "focus on the holistic development of players offering not only virtual training "
                   "and personal soccer coaches but also those with expertise in futsal, goalkeeping, "
                   "position specific training, video analysis, and more."),
+
             ],
           ),
         ),

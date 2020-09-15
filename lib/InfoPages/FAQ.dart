@@ -14,14 +14,22 @@ class FAQ extends StatelessWidget {
 
 class FAQPage extends StatelessWidget {
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
+    return Scaffold(      
       appBar: AppBar(
         centerTitle: true,
         title: Text('F&Qs'),
       ),
       drawer: myDrawer(),
-      body: Padding(padding: EdgeInsets.all(13.0), child: FaqList()),
+      body: Padding(padding: EdgeInsets.all(13.0),
+          child: SingleChildScrollView(
+            physics: ScrollPhysics(),
+            child: Column(
+              children: [
+                FaqList(),
+
+              ],
+            ),
+          )),
     );
   }
 }
@@ -59,7 +67,7 @@ class FaqList extends StatelessWidget {
             'Yes, but only if they specifically set their session as accepting cash.'),
     FaQ(
         question:
-            'If I’m unable to book a session through the Treiner website who can I contact?',
+            'If I\'m unable to book a session through the Treiner website who can I contact?',
         answer:
             'If you are unable to book a session you can contact us by clicking on the Contact Treiner option on the page. If you need an instant response you can also message us on our Facebook, Instagram, Twitter and LinkedIn page.'),
     FaQ(
@@ -81,6 +89,8 @@ class FaqList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       itemCount: faqs.length,
       itemBuilder: (BuildContext context, int index) {
         return Column(
@@ -91,15 +101,13 @@ class FaqList extends StatelessWidget {
               textAlign: TextAlign.left,
               style: Theme.of(context)
                   .textTheme
-                  .subtitle2
-                  .merge(TextStyle(letterSpacing: 0.2, wordSpacing: 2)),
-            ),
+                  .subtitle2),
+            SizedBox(height: 5),
             Text('${faqs[index].answer}',
                 textAlign: TextAlign.left,
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2
-                    .merge(TextStyle(letterSpacing: 0.2, wordSpacing: 2)))
+                    .bodyText2)
           ],
         );
       },

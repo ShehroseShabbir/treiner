@@ -92,7 +92,8 @@ final ThemeData myTheme = ThemeData(
     subtitle2: TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.bold,
-        wordSpacing: 1
+        wordSpacing: 2,
+        letterSpacing: 0.2,
     ),
     bodyText1: TextStyle(
       color: Colors.black87,
@@ -104,8 +105,8 @@ final ThemeData myTheme = ThemeData(
       color: Colors.black87,
       fontSize: 14,
       fontWeight: FontWeight.w200,
-      wordSpacing: 2,
-      letterSpacing: 0.5
+      wordSpacing: 1.5,
+      letterSpacing: 0.5,
     ),
     caption:TextStyle(
       color: Colors.grey.shade600,

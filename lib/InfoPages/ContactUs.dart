@@ -34,6 +34,7 @@ class ContactUsPage extends StatelessWidget {
             ),
             SizedBox(height: 5),
             ContactUsForm(),
+
           ],
         ),
       ),

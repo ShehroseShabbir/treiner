@@ -23,9 +23,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.grey.shade200,
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text('Treiner'),
-        ),
+        appBar: myAppBar('Treiner'),
         drawer: myDrawer(),
         body: SingleChildScrollView(
           physics: ScrollPhysics(),
@@ -40,7 +38,7 @@ class HomePage extends StatelessWidget {
                 Center(
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 1.5,
+                    height: 500,
                     child: Selection(),
                 )),
                 SizedBox(height: 20),

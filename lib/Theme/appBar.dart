@@ -16,7 +16,7 @@ Widget myAppBar(String title) {
         title,
         style: TextStyle(
           color: Colors.white,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.bold,
         ),
       ),
   );
@@ -146,7 +146,7 @@ class BottomBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(flex: 7,child: Text('Copyright © 2020. All Rights Reserved', style: Theme.of(context).textTheme.caption,)),
-          Expanded(flex: 4,child: SocialButton()),
+          Expanded(flex: 4,child: Align(alignment:Alignment.centerRight,child: SocialButton())),
         ],
       ),
     );
