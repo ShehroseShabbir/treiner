@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:treiner/Coach/coach_findjob.dart';
+import 'package:treiner/Coach/coach_offers.dart';
 import 'package:treiner/Player/player_dashboard.dart';
 import 'package:treiner/Sessions/session_main.dart';
 import 'package:treiner/functions.dart';
@@ -53,26 +54,26 @@ class _CoachDashboard extends State<CoachDashboard> {
           ],
         )),
         body: Container(
-          child: ListView(
+          child: Column(
             children: [
-              MyMenu(
-                title: "Find a Job",
+              MenuButton(
+                title: "Find A Job",
                 icon: Icons.work,
-                route: CoachFindJobs.route,
+                route: MyJobs.route,
               ),
-              MyMenu(
+              MenuButton(
                 title: "My Job Applications",
                 icon: Icons.apps,
                 route: MyCoachJobs.route,
               ),
-              MyMenu(
+              MenuButton(
                 title: "Sessions",
-                icon: Icons.calendar_today,
+                icon: Icons.account_box,
                 route: CoachSessions.route,
               ),
-              MyMenu(
-                title: "Contact us",
-                icon: Icons.email,
+              MenuButton(
+                title: "Contact Us",
+                icon: Icons.work,
                 route: CoachContact.route,
               ),
             ],

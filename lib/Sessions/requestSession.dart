@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
+import 'package:treiner/Player/player_dashboard.dart';
 
 class RequestSession extends StatefulWidget {
   static String route = '/requestSession';
@@ -129,7 +130,7 @@ class _RequestSessionFormDesignState extends State<RequestSessionFormDesign> {
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: MaterialButton(
+                                      child: RaisedButton(
                                         onPressed: () {
                                           Navigator.push(
                                               context,
@@ -284,7 +285,23 @@ class _ChooseTrainingState extends State<ChooseTraining> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: MaterialButton(
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          color: Color(0xFF006944),
+                                          splashColor: Colors.black,
+                                          textColor: Colors.white,
+                                          child: Icon(
+                                            Icons.arrow_back,
+                                            size: 40,
+                                          ),
+                                          padding: EdgeInsets.all(16),
+                                          shape: CircleBorder(),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RaisedButton(
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -477,7 +494,23 @@ class _JobDescriptionState extends State<JobDescription> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: MaterialButton(
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          color: Color(0xFF006944),
+                                          splashColor: Colors.black,
+                                          textColor: Colors.white,
+                                          child: Icon(
+                                            Icons.arrow_back,
+                                            size: 40,
+                                          ),
+                                          padding: EdgeInsets.all(16),
+                                          shape: CircleBorder(),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RaisedButton(
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -635,7 +668,23 @@ class _ChooseTimeState extends State<ChooseTime> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: MaterialButton(
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          color: Color(0xFF006944),
+                                          splashColor: Colors.black,
+                                          textColor: Colors.white,
+                                          child: Icon(
+                                            Icons.arrow_back,
+                                            size: 40,
+                                          ),
+                                          padding: EdgeInsets.all(16),
+                                          shape: CircleBorder(),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RaisedButton(
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -804,7 +853,23 @@ class _ChooseMoneyState extends State<ChooseMoney> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: MaterialButton(
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          color: Color(0xFF006944),
+                                          splashColor: Colors.black,
+                                          textColor: Colors.white,
+                                          child: Icon(
+                                            Icons.arrow_back,
+                                            size: 40,
+                                          ),
+                                          padding: EdgeInsets.all(16),
+                                          shape: CircleBorder(),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RaisedButton(
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -985,7 +1050,23 @@ class _ChooseDateState extends State<ChooseDate> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: MaterialButton(
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          color: Color(0xFF006944),
+                                          splashColor: Colors.black,
+                                          textColor: Colors.white,
+                                          child: Icon(
+                                            Icons.arrow_back,
+                                            size: 40,
+                                          ),
+                                          padding: EdgeInsets.all(16),
+                                          shape: CircleBorder(),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RaisedButton(
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -1166,7 +1247,23 @@ class _ChooseTrainingTimeState extends State<ChooseTrainingTime> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: MaterialButton(
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          color: Color(0xFF006944),
+                                          splashColor: Colors.black,
+                                          textColor: Colors.white,
+                                          child: Icon(
+                                            Icons.arrow_back,
+                                            size: 40,
+                                          ),
+                                          padding: EdgeInsets.all(16),
+                                          shape: CircleBorder(),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RaisedButton(
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -1350,7 +1447,23 @@ class _ChooseLocationState extends State<ChooseLocation> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: MaterialButton(
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          color: Color(0xFF006944),
+                                          splashColor: Colors.black,
+                                          textColor: Colors.white,
+                                          child: Icon(
+                                            Icons.arrow_back,
+                                            size: 40,
+                                          ),
+                                          padding: EdgeInsets.all(16),
+                                          shape: CircleBorder(),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RaisedButton(
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -1540,7 +1653,13 @@ class _SubmitSessionRequestState extends State<SubmitSessionRequest> {
                                       RaisedButton.icon(
                                         textColor: Colors.white,
                                         color: Color(0xFF006944),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PlayerDashboard()));
+                                        },
                                         icon: Icon(Icons.arrow_back),
                                         label: Text("Start over"),
                                       ),

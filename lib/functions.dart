@@ -65,6 +65,46 @@ class MyMenu extends StatelessWidget {
   }
 }
 
+class MenuButton extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final String route;
+
+  MenuButton({
+    Key key,
+    this.title,
+    this.icon,
+    this.route,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(13.0),
+      child: RaisedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, route);
+        },
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: 40,
+                ),
+              ],
+            ),
+            Column(children: [Text(title)]),
+          ],
+        ),
+        shape: Border(),
+      ),
+    );
+  }
+}
+
 String setAppBarTitle(String title) {
   return title;
 }

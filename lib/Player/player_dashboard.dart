@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:treiner/Coach/coach_dashbaord.dart';
+import 'package:treiner/Player/player_book.dart';
 import 'package:treiner/Player/player_findcoach.dart';
 import 'package:treiner/Sessions/RequestSession.dart';
 import 'package:treiner/functions.dart';
@@ -48,29 +49,25 @@ class PlayerDashboard extends StatelessWidget {
         body: Container(
           child: ListView(
             children: [
-              MyMenu(
+              MenuButton(
                 title: "Find a Coach",
                 icon: Icons.local_library,
-                shape: Colors.green,
                 route: FindCoach.route,
               ),
-              MyMenu(
+              MenuButton(
                 title: "Request a Session",
                 icon: Icons.book,
-                shape: Colors.green,
                 route: RequestSession.route,
               ),
-              MyMenu(
+              MenuButton(
                 title: "Session",
                 icon: Icons.business_center,
-                shape: Colors.green,
                 route: null,
               ),
-              MyMenu(
-                title: "Contact us",
-                icon: Icons.contacts,
-                shape: Colors.green,
-                route: null,
+              MenuButton(
+                title: "Contact Us",
+                icon: Icons.work,
+                route: CoachContact.route,
               ),
             ],
           ),
