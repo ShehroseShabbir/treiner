@@ -55,38 +55,30 @@ class SignUpPage extends StatelessWidget {
     }
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(title: Text('Register'),),
       drawer: myDrawer(),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(13.0),
         child: Column(
           children: <Widget>[
             Text('Sign up as a player or a coach',style: Theme.of(context).textTheme.subtitle2,),
             SizedBox(height: 5.0),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: GestureDetector(
-                    onTap: () {
-                      _ageConfirm();
-                    },
-                    child: Image.asset('assets/imgs/player.png'),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => SignUpCoach()));
-                    },
-                    child: Image.asset('assets/imgs/coach.png'),
-                  ),
-                ),
-              ]
+            GestureDetector(
+              onTap: () {
+                _ageConfirm();
+              },
+              child: Image.asset('assets/imgs/player.png',width: MediaQuery.of(context).size.width / 1.3),
             ),
-            SizedBox(height: 5.0),
+            SizedBox(height: 5),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => SignUpCoach()));
+              },
+              child: Image.asset('assets/imgs/coach.png',width: MediaQuery.of(context).size.width / 1.3),
+            ),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

@@ -7,7 +7,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:treiner/Theme/appBar.dart';
-import 'file:///D:/AndroidStudioProjects/treiner/lib/InfoPages/TermsConditions.dart';
+import 'package:treiner/InfoPages/TermsConditions.dart';
 import 'package:treiner/Theme/theme.dart';
 
 class SignUpCoach extends StatelessWidget {
@@ -43,89 +43,26 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isSubscribed = true; //Sign up news letter
   bool _isAgreed = false; //Agree to terms and conditions
-  DateTime _selectedDOB = DateTime(1900);
   bool _obscureText = true;
   File _profilePicture;
   final _picPicker = ImagePicker();
   Gender _gender = Gender.male;
-
-  Future<Null> getImage() async {
-    final PickedFile pickedFile =
-        await _picPicker.getImage(source: ImageSource.gallery);
-    setState(() => this._profilePicture = File(pickedFile.path));
-  }
+  String _selectedCountry;
+  String _selectedBusinessType;
+  String _selectedworkingLiecence;
+  String _selectedageGroup;
+  String _selectedqulification;
+  String _selectedSessionType;
 
   TextEditingController _ctrlDOB = TextEditingController();
   TextEditingController _ctrlPassword = TextEditingController();
   TextEditingController _ctrlCoachingYear = TextEditingController();
 
-  List<String> _country = [
-    'Australia',
-    'New Zealand',
-    'United States',
-    'Singapore',
-    'Hong Kong',
-    'Canada'
-  ];
-  String _selectedCountry;
-
-  List<String> _businessType = ['Sole Proprietor', 'Other'];
-  String _selectedBusinessType;
-
-  List<String> _workingLiecence = [
-    'New South Wales Working With Children Check',
-    'Victorian Working With Children Check',
-    'Queensland Working With Children Check',
-    'Western Australia Working With Children Check',
-    'South Australia Working With Children Check',
-    'Tasmanian Registration to Work With Vulnerable People',
-    'Australian Capital Territory Working with Vulnerable People Check',
-    'Northern Territory Working With Children Check / Ochre Card',
-    'FIFA Verification',
-    'Victorian Police Check',
-    'Victorian Teacher Number',
-    'New Zealand Teaching Number',
-    'New Zealand Children\'s Worker Safety Check'
-  ];
-  String _selectedworkingLiecence;
-
-  List<String> _ageGroup = [
-    '2-4 years',
-    '4-6 years',
-    '6-9 years',
-    '9-12 years',
-    '12-15 years',
-    '16-20 years',
-    '20-30 years',
-    '30-40 years',
-    '40-50 years',
-    '50-60 years',
-    '60-70 years',
-    '70+ years'
-  ];
-  String _selectedageGroup;
-
-  List<String> _qulification = [
-    'None',
-    'Grassroots',
-    'Community',
-    'C Licence',
-    'B Licence',
-    'A Licence',
-    'Pro Licence',
-  ];
-  String _selectedqulification;
-
-  List<String> _sessionType = [
-    'Virtual Training',
-    '1 on 1',
-    'Small Group',
-    'Team Training',
-    'Fustsal',
-    'Goalkeeper Training',
-    'Video Analysis'
-  ];
-  String _selectedSessionType;
+  Future<Null> getImage() async {
+    final PickedFile pickedFile =
+    await _picPicker.getImage(source: ImageSource.gallery);
+    setState(() => this._profilePicture = File(pickedFile.path));
+  }
 
   Future<void> _termsAgree() async {
     return showDialog<void>(
@@ -265,21 +202,15 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 Expanded(
                   flex: 6,
                   child: DropdownButton(
-                    hint: Text('Select your country'),
-                    value: _selectedCountry,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedCountry = newValue;
-                      });
-                    },
-                    items: _country.map((country) {
-                      return DropdownMenuItem(
-                        child: new Text(country),
-                        value: country,
-                      );
-                    }).toList(),
-                  ),
-                ),
+                      hint: Text('Select your country'),
+                      value: _selectedCountry,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedCountry = newValue;
+                        });
+                      },
+                      items: _country,
+                ))
               ],
             ),
             SizedBox(height: 5),
@@ -333,7 +264,9 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 ),
                 validator: MultiValidator([
                   RequiredValidator(errorText: 'Password can\'t be empty.'),
-                  MinLengthValidator(8, errorText: 'Please lengthen password to 8 characters or more.')
+                  MinLengthValidator(8,
+                      errorText:
+                          'Please lengthen password to 8 characters or more.')
                 ])),
             SizedBox(height: 5),
             TextFormField(
@@ -398,12 +331,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                         _selectedBusinessType = newValue;
                       });
                     },
-                    items: _businessType.map((businessType) {
-                      return DropdownMenuItem(
-                        child: new Text(businessType),
-                        value: businessType,
-                      );
-                    }).toList(),
+                    items: _businessType
                   ),
                 ),
               ],
@@ -431,12 +359,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                   _selectedworkingLiecence = newValue;
                 });
               },
-              items: _workingLiecence.map((workingLiecence) {
-                return DropdownMenuItem(
-                  child: new Text(workingLiecence),
-                  value: workingLiecence,
-                );
-              }).toList(),
+              items: _workingLiecence
             ),
             SizedBox(height: 5),
             TextFormField(
@@ -487,12 +410,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                         _selectedageGroup = newValue;
                       });
                     },
-                    items: _ageGroup.map((ageGroup) {
-                      return DropdownMenuItem(
-                        child: new Text(ageGroup),
-                        value: ageGroup,
-                      );
-                    }).toList(),
+                    items: _ageGroup
                   ),
                 ),
               ],
@@ -517,12 +435,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                         _selectedqulification = newValue;
                       });
                     },
-                    items: _qulification.map((qulification) {
-                      return DropdownMenuItem(
-                        child: new Text(qulification),
-                        value: qulification,
-                      );
-                    }).toList(),
+                    items: _qulification
                   ),
                 ),
               ],
@@ -587,12 +500,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                           _selectedSessionType = newValue;
                         });
                       },
-                      items: _sessionType.map((sessionType) {
-                        return DropdownMenuItem(
-                          child: new Text(sessionType),
-                          value: sessionType,
-                        );
-                      }).toList(),
+                      items: _sessionType
                     ))
               ],
             ),
@@ -684,7 +592,10 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 RichText(
                   text: TextSpan(
                       text: 'terms and conditions',
-                      style: Theme.of(context).textTheme.bodyText2.merge(TextStyle(color: tGreen)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .merge(TextStyle(color: tGreen)),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           Navigator.push(
@@ -715,4 +626,116 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
       ),
     );
   }
+  List<DropdownMenuItem> _sessionType = [
+    DropdownMenuItem(value: 'VirtualTraining', child: Text('Virtual Training')),
+    DropdownMenuItem(value: '1on1', child: Text('1 on 1')),
+    DropdownMenuItem(value: 'SmallGroup', child: Text('Small Group')),
+    DropdownMenuItem(value: 'TeamTraining', child: Text('Team Training')),
+    DropdownMenuItem(value: 'Futsal', child: Text('Futsal')),
+    DropdownMenuItem(
+        value: 'GoalkeeperTraining', child: Text('Goalkeeper Training')),
+    DropdownMenuItem(value: 'VideoAnalysis', child: Text('Video Analysis')),
+    DropdownMenuItem(
+        value: 'StrengthConditioning', child: Text('Strength Conditioning')),
+    DropdownMenuItem(
+        value: 'FootballConditioning', child: Text('Football Conditioning')),
+    DropdownMenuItem(value: 'StrikerTraining', child: Text('Striker Training')),
+    DropdownMenuItem(
+        value: 'PositionSpecific', child: Text('Position Specific')),
+    DropdownMenuItem(value: 'SportsScience', child: Text('Sports Science')),
+    DropdownMenuItem(
+        value: 'SportsPsychology', child: Text('Sports Psychology')),
+    DropdownMenuItem(
+        value: 'FootballNutritionist', child: Text('Football Nutritionist')),
+    DropdownMenuItem(
+        value: 'FootballDietician', child: Text('Football Dietician')),
+    DropdownMenuItem(value: 'Podiatrist', child: Text('Podiatrist')),
+    DropdownMenuItem(value: 'Chiropractor', child: Text('Chiropractor')),
+    DropdownMenuItem(
+        value: 'ExercisePhysiologist', child: Text('Exercise Physiologist')),
+    DropdownMenuItem(value: 'SportsDoctor', child: Text('Sports Doctor')),
+    DropdownMenuItem(value: 'Physiotherapist', child: Text('Physiotherapist')),
+    DropdownMenuItem(
+        value: 'MassageTherapist', child: Text('Massage Therapist'))
+  ];
+
+  List<DropdownMenuItem> _country = [
+    DropdownMenuItem(value: 'australia', child: Text('Australia')),
+    DropdownMenuItem(value: 'new_zealand', child: Text('New Zealand')),
+    DropdownMenuItem(value: 'usa', child: Text('United State')),
+    DropdownMenuItem(value: 'singapore', child: Text('Singapore')),
+    DropdownMenuItem(value: 'hong_kong', child: Text('Hong Kong')),
+    DropdownMenuItem(value: 'canada', child: Text('Canada')),
+  ];
+
+
+  List<DropdownMenuItem> _businessType = [
+    DropdownMenuItem(value: 'individual', child: Text('Sole Proprietor')),
+    DropdownMenuItem(value: 'company', child: Text('Other'))
+  ];
+
+  List<DropdownMenuItem> _workingLiecence = [
+    DropdownMenuItem(
+        value: 'working_with_children_nsw',
+        child: Text('New South Wales Working With Children Check')),
+    DropdownMenuItem(
+        value: 'working_with_children_vic',
+        child: Text('Victorian Working With Children Check')),
+    DropdownMenuItem(
+        value: 'working_with_children_qld',
+        child: Text('Queensland Working With Children Check')),
+    DropdownMenuItem(
+        value: 'working_with_children_wa',
+        child: Text('Western Australia Working With Children Check')),
+    DropdownMenuItem(
+        value: 'working_with_children_sa',
+        child: Text('South Australia Working With Children Check')),
+    DropdownMenuItem(
+        value: 'working_with_children_tas',
+        child: Text('Tasmanian Registration to Work With Vulnerable People')),
+    DropdownMenuItem(
+        value: 'working_with_children_act',
+        child: Text(
+            'Australian Capital Territory Working with Vulnerable People Check')),
+    DropdownMenuItem(
+        value: 'working_with_children_nt',
+        child: Text(
+            'Northern Territory Working With Children Check / Ochre Card')),
+    DropdownMenuItem(value: 'fifa', child: Text('FIFA Verification')),
+    DropdownMenuItem(
+        value: 'victorian_police_check', child: Text('Victorian Police Check')),
+    DropdownMenuItem(
+        value: 'victorian_teacher_number',
+        child: Text('Victorian Teacher Number')),
+    DropdownMenuItem(
+        value: 'nz_teaching_number',
+        child: Text('New Zealand Teaching Number')),
+    DropdownMenuItem(
+        value: 'nz_children_check',
+        child: Text('New Zealand Children\'s Worker Safety Check')),
+  ];
+
+  List<DropdownMenuItem> _ageGroup = [
+    DropdownMenuItem(value: '2_4', child: Text('2-4 years')),
+    DropdownMenuItem(value: '4_6', child: Text('4-6 years')),
+    DropdownMenuItem(value: '6_9', child: Text('6-9 years')),
+    DropdownMenuItem(value: '9_12', child: Text('9-12 years')),
+    DropdownMenuItem(value: '12_15', child: Text('12-15 years')),
+    DropdownMenuItem(value: '16_20', child: Text('16-20 years')),
+    DropdownMenuItem(value: '20_30', child: Text('20-30 years')),
+    DropdownMenuItem(value: '30_40', child: Text('30-40 years')),
+    DropdownMenuItem(value: '40_60', child: Text('40-60 years')),
+    DropdownMenuItem(value: '60_70', child: Text('60-70 years')),
+    DropdownMenuItem(value: '70', child: Text('70+ years'))
+  ];
+
+  List<DropdownMenuItem> _qulification = [
+    DropdownMenuItem(value: 'None', child: Text('None')),
+    DropdownMenuItem(value: 'Grassroots', child: Text('Grassroots')),
+    DropdownMenuItem(value: 'Community', child: Text('Community')),
+    DropdownMenuItem(value: 'CLicence', child: Text('C Licence')),
+    DropdownMenuItem(value: 'BLicence', child: Text('B Licence')),
+    DropdownMenuItem(value: 'ALicence', child: Text('A Licence')),
+    DropdownMenuItem(value: 'ProLicence', child: Text('Pro Licence')),
+  ];
 }

@@ -7,6 +7,7 @@ import 'file:///D:/AndroidStudioProjects/treiner/lib/InfoPages/ContactUs.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:treiner/InfoPages/TermsConditions.dart';
 import 'package:treiner/Theme/theme.dart';
+import 'package:treiner/WelcomePages/home.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget myAppBar(String title) {
@@ -35,6 +36,11 @@ class myDrawer extends StatelessWidget {
               child: FlutterLogo(size: 42.0),
               backgroundColor: Colors.white,
             ),
+          ),
+          ListTile(
+            title: Text('Home'),
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Home())),
           ),
           ListTile(
             title: Text('Sessions'),

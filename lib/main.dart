@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:treiner/Testing/classtest.dart';
 import 'package:treiner/Theme/theme.dart';
 import 'WelcomePages/SplashScreen.dart';
 
-void main() => runApp(MaterialApp(theme: myTheme,home: SplashScreen()));
+void main() => runApp(MaterialApp(theme: myTheme,home: test()));

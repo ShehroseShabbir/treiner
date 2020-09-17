@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:treiner/Theme/appBar.dart';
-import 'file:///D:/AndroidStudioProjects/treiner/lib/InfoPages/TermsConditions.dart';
+import 'package:treiner/InfoPages/TermsConditions.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:treiner/Theme/theme.dart';
 
@@ -41,20 +41,19 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isSubscribed = true; //Sign up news letter
   bool _isAgreed = false; //Agree to terms and conditions
-  DateTime _selectedDOB = DateTime(1900);
   bool _obscureText = true;
   Gender _gender = Gender.male;
 
   TextEditingController _ctrlDOB = TextEditingController();
   TextEditingController _ctrlPassword = TextEditingController();
 
-  List<String> _country = [
-    'Australia',
-    'New Zealand',
-    'United States',
-    'Singapore',
-    'Hong Kong',
-    'Canada'
+  List<DropdownMenuItem> _country = [
+    DropdownMenuItem(value: 'australia',child: Text('Australia')),
+    DropdownMenuItem(value: 'new_zealand',child: Text('New Zealand')),
+    DropdownMenuItem(value: 'usa',child: Text('United State')),
+    DropdownMenuItem(value: 'singapore',child: Text('Singapore')),
+    DropdownMenuItem(value: 'hong_kong',child: Text('Hong Kong')),
+    DropdownMenuItem(value: 'canada',child: Text('Canada')),
   ];
   String _selectedCountry;
 
@@ -205,12 +204,7 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
                         _selectedCountry = newValue;
                       });
                     },
-                    items: _country.map((country) {
-                      return DropdownMenuItem(
-                        child: new Text(country),
-                        value: country,
-                      );
-                    }).toList(),
+                    items: _country,
                   ),
                 ),
               ],
