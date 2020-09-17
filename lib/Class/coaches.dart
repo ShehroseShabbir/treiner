@@ -22,7 +22,7 @@ class coaches {
   DateTime deleted_at;
   int location_id;
 
-  coaches(
+  coaches({
       this.id,
       this.club,
       this.is_company,
@@ -41,7 +41,7 @@ class coaches {
       this.created_at,
       this.updated_at,
       this.deleted_at,
-      this.location_id);
+      this.location_id});
 
   getId(){
     return this.id;

@@ -458,7 +458,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                         icon: Icon(Icons.arrow_drop_up),
                         onPressed: () {
                           int year = int.parse(_ctrlCoachingYear.text);
-                          if (year >= 0 && year <= 60) {
+                          if (year >= 0 && year < 60) {
                             year++;
                           }
                           _ctrlCoachingYear.text = year.toString();
