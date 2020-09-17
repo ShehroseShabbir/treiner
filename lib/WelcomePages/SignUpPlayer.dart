@@ -187,27 +187,23 @@ class _SignUpPlayerFormState extends State<SignUpPlayerForm> {
               ],
             ),
             SizedBox(height: 5),
-            Row(
-              children: <Widget>[
-                Expanded(flex: 1, child: Icon(Icons.location_city)),
-                Expanded(
-                    flex: 2,
-                    child: Text('Country',
-                        style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(
-                  flex: 6,
-                  child: DropdownButton(
-                    hint: Text('Select your country'),
-                    value: _selectedCountry,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedCountry = newValue;
-                      });
-                    },
-                    items: _country,
-                  ),
-                ),
-              ],
+            DropdownButtonFormField(
+              decoration: InputDecoration(
+                  labelText: 'Country',
+                  prefixIcon: Icon(Icons.location_city)
+              ),
+              onChanged: (newValue) {
+                setState(() {
+                  _selectedCountry = newValue;
+                });
+              },
+              items: _country,
+              validator: (val){
+                if (val == null) {
+                  return 'Please select your country';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 5),
             TextFormField(

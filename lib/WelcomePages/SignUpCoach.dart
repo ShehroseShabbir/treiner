@@ -6,6 +6,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:treiner/Theme/appBar.dart';
 import 'package:treiner/InfoPages/TermsConditions.dart';
 import 'package:treiner/Theme/theme.dart';
@@ -40,7 +41,7 @@ class SignUpCoachForm extends StatefulWidget {
 }
 
 class _SignUpCoachFormState extends State<SignUpCoachForm> {
-  final _formKey = GlobalKey<FormState>();
+  final _coachFormKey = GlobalKey<FormState>();
   bool _isSubscribed = true; //Sign up news letter
   bool _isAgreed = false; //Agree to terms and conditions
   bool _obscureText = true;
@@ -50,9 +51,11 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
   String _selectedCountry;
   String _selectedBusinessType;
   String _selectedworkingLiecence;
-  String _selectedageGroup;
+  List _selectedAgeGroup;
+  String _selectedAgeGroupResult;
   String _selectedqulification;
-  String _selectedSessionType;
+  List _selectedSessionType;
+  String _selectedSessionTypeResult;
 
   TextEditingController _ctrlDOB = TextEditingController();
   TextEditingController _ctrlPassword = TextEditingController();
@@ -60,7 +63,7 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
 
   Future<Null> getImage() async {
     final PickedFile pickedFile =
-    await _picPicker.getImage(source: ImageSource.gallery);
+        await _picPicker.getImage(source: ImageSource.gallery);
     setState(() => this._profilePicture = File(pickedFile.path));
   }
 
@@ -90,20 +93,32 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
   void initState() {
     super.initState();
     _ctrlCoachingYear.text = "0";
+    _selectedAgeGroup = [];
+    _selectedAgeGroupResult ='';
+    _selectedSessionType = [];
+    _selectedSessionTypeResult = '';
+  }
+  
+  void _saveForm(){
+    _coachFormKey.currentState.save();
+    setState(() {
+      _selectedAgeGroupResult = _selectedAgeGroup.toString();
+      _selectedSessionTypeResult = _selectedSessionType.toString();
+    });
+  }
+  
+  void _toggle() {
+    //password eye icon
+    setState(() {
+      _obscureText = !_obscureText;
+      print(_obscureText);
+    });
   }
 
   @override
-  Widget build(BuildContext context) {
-    void _toggle() {
-      //password eye icon
-      setState(() {
-        _obscureText = !_obscureText;
-        print(_obscureText);
-      });
-    }
-
+  Widget build(BuildContext context) { 
     return Form(
-      key: _formKey,
+      key: _coachFormKey,
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -192,26 +207,23 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
               ],
             ),
             SizedBox(height: 5),
-            Row(
-              children: <Widget>[
-                Expanded(flex: 1, child: Icon(Icons.location_city)),
-                Expanded(
-                    flex: 2,
-                    child: Text('Country',
-                        style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(
-                  flex: 6,
-                  child: DropdownButton(
-                      hint: Text('Select your country'),
-                      value: _selectedCountry,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _selectedCountry = newValue;
-                        });
-                      },
-                      items: _country,
-                ))
-              ],
+            DropdownButtonFormField(
+              decoration: InputDecoration(
+                  labelText: 'Country',
+                  prefixIcon: Icon(Icons.location_city)
+              ),
+              onChanged: (newValue) {
+                setState(() {
+                  _selectedCountry = newValue;
+                });
+              },
+              items: _country,
+              validator: (val){
+                if (val == null) {
+                  return 'Please select your country';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 5),
             TextFormField(
@@ -314,52 +326,53 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 "players.)",
                 style: Theme.of(context).textTheme.caption),
             SizedBox(height: 5),
-            Row(
-              children: <Widget>[
-                Expanded(flex: 1, child: Icon(Icons.business)),
-                Expanded(
-                    flex: 2,
-                    child: Text('Business Type',
-                        style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(
-                  flex: 4,
-                  child: DropdownButton(
-                    hint: Text('Select business type'),
-                    value: _selectedBusinessType,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedBusinessType = newValue;
-                      });
-                    },
-                    items: _businessType
-                  ),
-                ),
-              ],
+            DropdownButtonFormField(
+              decoration: InputDecoration(
+                  labelText: 'Business Type',
+                  prefixIcon: Icon(Icons.business)
+              ),
+              onChanged: (newValue) {
+                setState(() {
+                  _selectedBusinessType = newValue;
+                });
+              },
+              items: _businessType,
+              validator: (val){
+                if (val == null) {
+                  return 'Please select your business type';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 5),
-            Row(
-              children: <Widget>[
-                Expanded(flex: 1, child: Icon(Icons.child_care)),
-                Expanded(
-                  flex: 6,
-                  child: Text('Working with Children Licence Type',
-                      style: Theme.of(context).textTheme.subtitle1),
+            TextFormField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.assignment),
+                  hintText:
+                  'Enter your business registration number (ABN or Equivalent).',
+                  labelText: 'Business Number',
                 ),
-              ],
-            ),
+                validator: RequiredValidator(
+                    errorText: 'Please enter business number.')),
             SizedBox(height: 5),
-            DropdownButton(
+            DropdownButtonFormField(
               isExpanded: true,
-              icon: Icon(Icons.arrow_drop_down),
-              hint: Text('Select Working With Children Licence Type',
-                  overflow: TextOverflow.ellipsis),
-              value: _selectedworkingLiecence,
+              decoration: InputDecoration(
+                  labelText: 'Working with Children Licence Type',
+                  prefixIcon: Icon(Icons.child_care)
+              ),
               onChanged: (newValue) {
                 setState(() {
                   _selectedworkingLiecence = newValue;
                 });
               },
-              items: _workingLiecence
+              items: _workingLiecence,
+              validator: (val){
+                if (val == null) {
+                  return 'Please select your working licence type.';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 5),
             TextFormField(
@@ -370,16 +383,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 ),
                 validator: RequiredValidator(
                     errorText: 'Please enter licence number.')),
-            SizedBox(height: 5),
-            TextFormField(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.assignment),
-                  hintText:
-                      'Enter your business registration number (ABN or Equivalent).',
-                  labelText: 'Business Number',
-                ),
-                validator: RequiredValidator(
-                    errorText: 'Please enter business number.')),
             SizedBox(height: 5),
             TextFormField(
                 decoration: InputDecoration(
@@ -395,50 +398,47 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
               children: <Widget>[
                 Expanded(flex: 1, child: Icon(Icons.filter_vintage)),
                 Expanded(
-                    flex: 2,
-                    child: Text('Age Groups Coached',
-                        style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(
-                  flex: 4,
-                  child: DropdownButton(
-                    isExpanded: true,
-                    hint: Text('Select the age groups you have coached.',
-                        overflow: TextOverflow.ellipsis),
-                    value: _selectedageGroup,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedageGroup = newValue;
-                      });
-                    },
-                    items: _ageGroup
-                  ),
-                ),
+                    flex: 6,
+                    child: MultiSelectFormField(
+                      titleText: 'Age Groups Coached',
+                      hintText: 'Select the age groups you have coached.',
+                      validator: (value) {
+                        if (value == null || value.length == 0) {
+                          return 'Please select one or more options.';
+                        }
+                        return null;
+                      },
+                      textField: 'display',
+                      valueField: 'value',
+                      okButtonLabel: 'Confirm',
+                      cancelButtonLabel: 'Cancel',
+                      onSaved: (value) {
+                        if (value == null) return;
+                        setState(() {
+                          _selectedAgeGroup = value;
+                        });},
+                      dataSource: _ageGroup,
+                    ),)                
               ],
             ),
             SizedBox(height: 5),
-            Row(
-              children: <Widget>[
-                Expanded(flex: 1, child: Icon(Icons.assignment)),
-                Expanded(
-                    flex: 2,
-                    child: Text('Highest Coaching Qualification',
-                        style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(
-                  flex: 4,
-                  child: DropdownButton(
-                    isExpanded: true,
-                    hint: Text('Select highest coaching qualification.',
-                        overflow: TextOverflow.ellipsis),
-                    value: _selectedqulification,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedqulification = newValue;
-                      });
-                    },
-                    items: _qulification
-                  ),
-                ),
-              ],
+            DropdownButtonFormField(
+              decoration: InputDecoration(
+                  labelText: 'Highest Coaching Qualification',
+                  prefixIcon: Icon(Icons.location_city)
+              ),
+              onChanged: (newValue) {
+                setState(() {
+                  _selectedqulification = newValue;
+                });
+              },
+              items: _qulification,
+              validator: (val){
+                if (val == null) {
+                  return 'Please select your highest coaching qualification.';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 5),
             TextFormField(
@@ -485,23 +485,28 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
               children: <Widget>[
                 Expanded(flex: 1, child: Icon(Icons.assignment)),
                 Expanded(
-                    flex: 2,
-                    child: Text('Session Type',
-                        style: Theme.of(context).textTheme.subtitle1)),
-                Expanded(
-                    flex: 4,
-                    child: DropdownButton(
-                      isExpanded: true,
-                      hint: Text('Select session type.',
-                          overflow: TextOverflow.ellipsis),
-                      value: _selectedSessionType,
-                      onChanged: (newValue) {
+                    flex: 6,
+                    child: MultiSelectFormField(
+                      titleText: 'Session Type',
+                      hintText: 'Select session type.',
+                      validator: (value) {
+                        if (value == null || value.length == 0) {
+                          return 'Please select one or more options.';
+                        }
+                        return null;
+                      },
+                      textField: 'display',
+                      valueField: 'value',
+                      okButtonLabel: 'Confirm',
+                      cancelButtonLabel: 'Cancel',
+                      onSaved: (value) {
+                        if (value == null) return;
                         setState(() {
-                          _selectedSessionType = newValue;
+                          _selectedSessionType = value;
                         });
                       },
-                      items: _sessionType
-                    ))
+                      dataSource: _sessionType,
+                    )),
               ],
             ),
             SizedBox(height: 5),
@@ -612,12 +617,9 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
                 onPressed: () {
                   // Validate will return true if the form is valid, or false if
                   // the form is invalid.
-                  if (_formKey.currentState.validate()) {
+                  if (_coachFormKey.currentState.validate()) {
                     _isAgreed
-                        ? Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TermsConditions()))
+                        ? _saveForm()
                         : _termsAgree();
                   }
                 }),
@@ -626,37 +628,29 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
       ),
     );
   }
-  List<DropdownMenuItem> _sessionType = [
-    DropdownMenuItem(value: 'VirtualTraining', child: Text('Virtual Training')),
-    DropdownMenuItem(value: '1on1', child: Text('1 on 1')),
-    DropdownMenuItem(value: 'SmallGroup', child: Text('Small Group')),
-    DropdownMenuItem(value: 'TeamTraining', child: Text('Team Training')),
-    DropdownMenuItem(value: 'Futsal', child: Text('Futsal')),
-    DropdownMenuItem(
-        value: 'GoalkeeperTraining', child: Text('Goalkeeper Training')),
-    DropdownMenuItem(value: 'VideoAnalysis', child: Text('Video Analysis')),
-    DropdownMenuItem(
-        value: 'StrengthConditioning', child: Text('Strength Conditioning')),
-    DropdownMenuItem(
-        value: 'FootballConditioning', child: Text('Football Conditioning')),
-    DropdownMenuItem(value: 'StrikerTraining', child: Text('Striker Training')),
-    DropdownMenuItem(
-        value: 'PositionSpecific', child: Text('Position Specific')),
-    DropdownMenuItem(value: 'SportsScience', child: Text('Sports Science')),
-    DropdownMenuItem(
-        value: 'SportsPsychology', child: Text('Sports Psychology')),
-    DropdownMenuItem(
-        value: 'FootballNutritionist', child: Text('Football Nutritionist')),
-    DropdownMenuItem(
-        value: 'FootballDietician', child: Text('Football Dietician')),
-    DropdownMenuItem(value: 'Podiatrist', child: Text('Podiatrist')),
-    DropdownMenuItem(value: 'Chiropractor', child: Text('Chiropractor')),
-    DropdownMenuItem(
-        value: 'ExercisePhysiologist', child: Text('Exercise Physiologist')),
-    DropdownMenuItem(value: 'SportsDoctor', child: Text('Sports Doctor')),
-    DropdownMenuItem(value: 'Physiotherapist', child: Text('Physiotherapist')),
-    DropdownMenuItem(
-        value: 'MassageTherapist', child: Text('Massage Therapist'))
+
+  var _sessionType = [
+    {'value': 'VirtualTraining', 'display': 'Virtual Training'},
+    {'value': '1on1', 'display': '1 on 1'},
+    {'value': 'SmallGroup', 'display': 'Small Group'},
+    {'value': 'TeamTraining', 'display': 'Team Training'},
+    {'value': 'Futsal', 'display': 'Futsal'},
+    {'value': 'GoalkeeperTraining', 'display': 'Goalkeeper Training'},
+    {'value': 'VideoAnalysis', 'display': 'Video Analysis'},
+    {'value': 'StrengthConditioning', 'display': 'Strength Conditioning'},
+    {'value': 'FootballConditioning', 'display': 'Football Conditioning'},
+    {'value': 'StrikerTraining', 'display': 'Striker Training'},
+    {'value': 'PositionSpecific', 'display': 'Position Specific'},
+    {'value': 'SportsScience', 'display': 'Sports Science'},
+    {'value': 'SportsPsychology', 'display': 'Sports Psychology'},
+    {'value': 'FootballNutritionist', 'display': 'Football Nutritionist'},
+    {'value': 'FootballDietician', 'display': 'Football Dietician'},
+    {'value': 'Podiatrist', 'display': 'Podiatrist'},
+    {'value': 'Chiropractor', 'display': 'Chiropractor'},
+    {'value': 'ExercisePhysiologist', 'display': 'Exercise Physiologist'},
+    {'value': 'SportsDoctor', 'display': 'Sports Doctor'},
+    {'value': 'Physiotherapist', 'display': 'Physiotherapist'},
+    {'value': 'MassageTherapist', 'display': 'Massage Therapist'}
   ];
 
   List<DropdownMenuItem> _country = [
@@ -667,7 +661,6 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
     DropdownMenuItem(value: 'hong_kong', child: Text('Hong Kong')),
     DropdownMenuItem(value: 'canada', child: Text('Canada')),
   ];
-
 
   List<DropdownMenuItem> _businessType = [
     DropdownMenuItem(value: 'individual', child: Text('Sole Proprietor')),
@@ -715,18 +708,18 @@ class _SignUpCoachFormState extends State<SignUpCoachForm> {
         child: Text('New Zealand Children\'s Worker Safety Check')),
   ];
 
-  List<DropdownMenuItem> _ageGroup = [
-    DropdownMenuItem(value: '2_4', child: Text('2-4 years')),
-    DropdownMenuItem(value: '4_6', child: Text('4-6 years')),
-    DropdownMenuItem(value: '6_9', child: Text('6-9 years')),
-    DropdownMenuItem(value: '9_12', child: Text('9-12 years')),
-    DropdownMenuItem(value: '12_15', child: Text('12-15 years')),
-    DropdownMenuItem(value: '16_20', child: Text('16-20 years')),
-    DropdownMenuItem(value: '20_30', child: Text('20-30 years')),
-    DropdownMenuItem(value: '30_40', child: Text('30-40 years')),
-    DropdownMenuItem(value: '40_60', child: Text('40-60 years')),
-    DropdownMenuItem(value: '60_70', child: Text('60-70 years')),
-    DropdownMenuItem(value: '70', child: Text('70+ years'))
+  var _ageGroup = [
+    {'value': '2_4', 'display': '2-4 years'},
+    {'value': '4_6', 'display': '4-6 years'},
+    {'value': '6_9', 'display': '6-9 years'},
+    {'value': '9_12', 'display': '9-12 years'},
+    {'value': '12_15', 'display': '12-15 years'},
+    {'value': '16_20', 'display': '16-20 years'},
+    {'value': '20_30', 'display': '20-30 years'},
+    {'value': '30_40', 'display': '30-40 years'},
+    {'value': '40_60', 'display': '40-60 years'},
+    {'value': '60_70', 'display': '60-70 years'},
+    {'value': '70', 'display': '70+ years'}
   ];
 
   List<DropdownMenuItem> _qulification = [
