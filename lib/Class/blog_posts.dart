@@ -1,7 +1,7 @@
 class blog_posts{
-  int id;
+  BigInt id;
   String image_id;
-  int coach_id;
+  BigInt coach_id;
   String title;
   String excerpt;
   String content;

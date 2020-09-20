@@ -1,5 +1,5 @@
 class failed_jobs{
-  int id;
+  BigInt id;
   String connection;
   String queue;
   String payload;

@@ -1,5 +1,5 @@
 class job_invitations{
-  int id;
+  BigInt id;
   int coach_id;
   int job_post_id;
   DateTime created_at;

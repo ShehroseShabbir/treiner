@@ -2,7 +2,7 @@ import 'dart:core';
 import 'package:treiner/Class/enums.dart';
 
 class coaches {
-  int id;
+  BigInt id;
   String club;
   bool is_company;
   String business_registration_number;
