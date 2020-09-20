@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:treiner/Testing/classtest.dart';
-import 'package:treiner/Theme/theme.dart';
-import 'WelcomePages/SplashScreen.dart';
+import 'package:treiner_app/Player%20Pages/Home.dart';
+import 'package:treiner_app/theme.dart';
 
-void main() => runApp(MaterialApp(theme: myTheme,home: test()));
+
+void main() {
+  runApp(MaterialApp(theme: myTheme,home: Home()));
+}
+
+
