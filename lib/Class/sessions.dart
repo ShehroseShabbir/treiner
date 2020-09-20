@@ -5,8 +5,8 @@ class sessions {
   DateTime stars;
   int length;
   int fee;
-  bool group_min;
-  bool group_max;
+  int group_min;
+  int group_max;
   String type;
   String status;
   DateTime deleted_at;

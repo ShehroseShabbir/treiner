@@ -4,4 +4,4 @@ import 'package:treiner/Theme/theme.dart';
 import 'InfoPages/Sessions.dart';
 import 'WelcomePages/SplashScreen.dart';
 
-void main() => runApp(MaterialApp(theme: myTheme,home: Sessions()));
+void main() => runApp(MaterialApp(theme: myTheme, home: Sessions()));
