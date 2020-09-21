@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
-import 'package:treiner/Player/player_dashboard.dart';
 
 class RequestSession extends StatefulWidget {
   static String route = '/requestSession';
@@ -32,6 +31,7 @@ class RequestSessionFormDesign extends StatefulWidget {
 
 class _RequestSessionFormDesignState extends State<RequestSessionFormDesign> {
   String dropdownValue = "Ball Mystery";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -130,11 +130,11 @@ class _RequestSessionFormDesignState extends State<RequestSessionFormDesign> {
                                 Row(
                                   children: [
                                     Expanded(
-<<<<<<< HEAD
                                       child: MaterialButton(
-=======
-                                      child: RaisedButton(
+                                        onPressed: () {
+                                          Navigator.push(
                                               context,
+                                              MaterialPageRoute(
                                                   builder: (context) =>
                                                       ChooseTraining(
                                                         jobTitle: dropdownValue,
@@ -203,13 +203,9 @@ class _RequestSessionFormDesignState extends State<RequestSessionFormDesign> {
 // Training Widget to Choose Training
 class ChooseTraining extends StatefulWidget {
   final String jobTitle;
-<<<<<<< HEAD
 
   ChooseTraining({this.jobTitle});
 
-=======
-  ChooseTraining({this.jobTitle});
->>>>>>> Janaki/master
   @override
   _ChooseTrainingState createState() => _ChooseTrainingState();
 }
@@ -291,27 +287,7 @@ class _ChooseTrainingState extends State<ChooseTraining> {
                                   Row(
                                     children: [
                                       Expanded(
-<<<<<<< HEAD
                                         child: MaterialButton(
-=======
-                                        child: RaisedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          color: Color(0xFF006944),
-                                          splashColor: Colors.black,
-                                          textColor: Colors.white,
-                                          child: Icon(
-                                            Icons.arrow_back,
-                                            size: 40,
-                                          ),
-                                          padding: EdgeInsets.all(16),
-                                          shape: CircleBorder(),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: RaisedButton(
->>>>>>> Janaki/master
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -390,23 +366,16 @@ class _ChooseTrainingState extends State<ChooseTraining> {
 class JobDescription extends StatefulWidget {
   String jobTitle;
   String trainingCat;
-<<<<<<< HEAD
 
   JobDescription({this.jobTitle, this.trainingCat});
 
-=======
-  JobDescription({this.jobTitle, this.trainingCat});
->>>>>>> Janaki/master
   @override
   _JobDescriptionState createState() => _JobDescriptionState();
 }
 
 class _JobDescriptionState extends State<JobDescription> {
   final myJobDescription = TextEditingController();
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   @override
   void dispose() {
     myJobDescription.dispose();
@@ -514,27 +483,7 @@ class _JobDescriptionState extends State<JobDescription> {
                                   Row(
                                     children: [
                                       Expanded(
-<<<<<<< HEAD
                                         child: MaterialButton(
-=======
-                                        child: RaisedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          color: Color(0xFF006944),
-                                          splashColor: Colors.black,
-                                          textColor: Colors.white,
-                                          child: Icon(
-                                            Icons.arrow_back,
-                                            size: 40,
-                                          ),
-                                          padding: EdgeInsets.all(16),
-                                          shape: CircleBorder(),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: RaisedButton(
->>>>>>> Janaki/master
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -581,23 +530,16 @@ class ChooseTime extends StatefulWidget {
   String jobTitle;
   String trainingCat;
   String jobDesc;
-<<<<<<< HEAD
 
   ChooseTime({this.jobTitle, this.trainingCat, this.jobDesc});
 
-=======
-  ChooseTime({this.jobTitle, this.trainingCat, this.jobDesc});
->>>>>>> Janaki/master
   @override
   _ChooseTimeState createState() => _ChooseTimeState();
 }
 
 class _ChooseTimeState extends State<ChooseTime> {
   final myMinutes = TextEditingController();
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   @override
   void dispose() {
     myMinutes.dispose();
@@ -702,27 +644,7 @@ class _ChooseTimeState extends State<ChooseTime> {
                                   Row(
                                     children: [
                                       Expanded(
-<<<<<<< HEAD
                                         child: MaterialButton(
-=======
-                                        child: RaisedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          color: Color(0xFF006944),
-                                          splashColor: Colors.black,
-                                          textColor: Colors.white,
-                                          child: Icon(
-                                            Icons.arrow_back,
-                                            size: 40,
-                                          ),
-                                          padding: EdgeInsets.all(16),
-                                          shape: CircleBorder(),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: RaisedButton(
->>>>>>> Janaki/master
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -770,23 +692,16 @@ class ChooseMoney extends StatefulWidget {
   String trainingCat;
   String jobDesc;
   String time;
-<<<<<<< HEAD
 
   ChooseMoney({this.jobTitle, this.trainingCat, this.jobDesc, this.time});
 
-=======
-  ChooseMoney({this.jobTitle, this.trainingCat, this.jobDesc, this.time});
->>>>>>> Janaki/master
   @override
   _ChooseMoneyState createState() => _ChooseMoneyState();
 }
 
 class _ChooseMoneyState extends State<ChooseMoney> {
   final myMoney = TextEditingController();
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   @override
   void dispose() {
     myMoney.dispose();
@@ -901,27 +816,7 @@ class _ChooseMoneyState extends State<ChooseMoney> {
                                   Row(
                                     children: [
                                       Expanded(
-<<<<<<< HEAD
                                         child: MaterialButton(
-=======
-                                        child: RaisedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          color: Color(0xFF006944),
-                                          splashColor: Colors.black,
-                                          textColor: Colors.white,
-                                          child: Icon(
-                                            Icons.arrow_back,
-                                            size: 40,
-                                          ),
-                                          padding: EdgeInsets.all(16),
-                                          shape: CircleBorder(),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: RaisedButton(
->>>>>>> Janaki/master
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -975,10 +870,7 @@ class ChooseDate extends StatefulWidget {
 
   ChooseDate(
       {this.jobTitle, this.trainingCat, this.jobDesc, this.time, this.money});
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   @override
   _ChooseDateState createState() => _ChooseDateState();
 }
@@ -993,10 +885,7 @@ class _ChooseDateState extends State<ChooseDate> {
   }
 
   final format = DateFormat("yyyy-MM-dd");
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1110,27 +999,7 @@ class _ChooseDateState extends State<ChooseDate> {
                                   Row(
                                     children: [
                                       Expanded(
-<<<<<<< HEAD
                                         child: MaterialButton(
-=======
-                                        child: RaisedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          color: Color(0xFF006944),
-                                          splashColor: Colors.black,
-                                          textColor: Colors.white,
-                                          child: Icon(
-                                            Icons.arrow_back,
-                                            size: 40,
-                                          ),
-                                          padding: EdgeInsets.all(16),
-                                          shape: CircleBorder(),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: RaisedButton(
->>>>>>> Janaki/master
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -1191,10 +1060,7 @@ class ChooseTrainingTime extends StatefulWidget {
       this.duration,
       this.date,
       this.money});
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   @override
   _ChooseTrainingTimeState createState() => _ChooseTrainingTimeState();
 }
@@ -1209,10 +1075,7 @@ class _ChooseTrainingTimeState extends State<ChooseTrainingTime> {
   }
 
   final format = DateFormat("HH:mm");
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1319,27 +1182,7 @@ class _ChooseTrainingTimeState extends State<ChooseTrainingTime> {
                                   Row(
                                     children: [
                                       Expanded(
-<<<<<<< HEAD
                                         child: MaterialButton(
-=======
-                                        child: RaisedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          color: Color(0xFF006944),
-                                          splashColor: Colors.black,
-                                          textColor: Colors.white,
-                                          child: Icon(
-                                            Icons.arrow_back,
-                                            size: 40,
-                                          ),
-                                          padding: EdgeInsets.all(16),
-                                          shape: CircleBorder(),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: RaisedButton(
->>>>>>> Janaki/master
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -1392,10 +1235,7 @@ class ChooseLocation extends StatefulWidget {
   String date;
   String money;
   String time;
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   ChooseLocation(
       {this.jobTitle,
       this.jobDesc,
@@ -1404,20 +1244,14 @@ class ChooseLocation extends StatefulWidget {
       this.duration,
       this.money,
       this.time});
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   @override
   _ChooseLocationState createState() => _ChooseLocationState();
 }
 
 class _ChooseLocationState extends State<ChooseLocation> {
   final myLocation = TextEditingController();
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   @override
   void dispose() {
     myLocation.dispose();
@@ -1535,27 +1369,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                                   Row(
                                     children: [
                                       Expanded(
-<<<<<<< HEAD
                                         child: MaterialButton(
-=======
-                                        child: RaisedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          color: Color(0xFF006944),
-                                          splashColor: Colors.black,
-                                          textColor: Colors.white,
-                                          child: Icon(
-                                            Icons.arrow_back,
-                                            size: 40,
-                                          ),
-                                          padding: EdgeInsets.all(16),
-                                          shape: CircleBorder(),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: RaisedButton(
->>>>>>> Janaki/master
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
@@ -1622,10 +1436,7 @@ class SubmitSessionRequest extends StatefulWidget {
       this.duration,
       this.money,
       this.location});
-<<<<<<< HEAD
 
-=======
->>>>>>> Janaki/master
   @override
   _SubmitSessionRequestState createState() => _SubmitSessionRequestState();
 }
@@ -1749,17 +1560,7 @@ class _SubmitSessionRequestState extends State<SubmitSessionRequest> {
                                       RaisedButton.icon(
                                         textColor: Colors.white,
                                         color: Color(0xFF006944),
-<<<<<<< HEAD
                                         onPressed: () {},
-=======
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PlayerDashboard()));
-                                        },
->>>>>>> Janaki/master
                                         icon: Icon(Icons.arrow_back),
                                         label: Text("Start over"),
                                       ),
@@ -1810,13 +1611,9 @@ class Headings extends StatelessWidget {
   double size;
   FontWeight bold;
   Color color;
-<<<<<<< HEAD
 
   Headings({this.title, this.size, this.bold, this.color});
 
-=======
-  Headings({this.title, this.size, this.bold, this.color});
->>>>>>> Janaki/master
   @override
   Widget build(BuildContext context) {
     return Container(

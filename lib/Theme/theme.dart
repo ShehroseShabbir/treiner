@@ -22,7 +22,11 @@ final ThemeData myTheme = ThemeData(
   dialogBackgroundColor: Colors.grey.shade50,
   indicatorColor: tGreen,
   hintColor: Colors.grey.shade600,
+  errorColor: Colors.red.shade700,
   textSelectionHandleColor: tGreen,
+  //Button
+  buttonTheme: ButtonThemeData(
+    buttonColor: tGreen,
     textTheme: ButtonTextTheme.primary,
     minWidth: 150.0,
     height: 40.0,
@@ -37,7 +41,11 @@ final ThemeData myTheme = ThemeData(
       secondary: tGreen,
       secondaryVariant: Color(0xff30a67e),
       surface: Color( 0xffffffff ),
+      background: Colors.white,
       error: Colors.red.shade700,
+      onPrimary: Colors.white,
+      onSecondary: Colors.white,
+      onSurface: Colors.black87,
       onBackground: Colors.black87,
       onError: Colors.white,
       brightness: Brightness.light,
@@ -59,6 +67,53 @@ final ThemeData myTheme = ThemeData(
     ),
     headline3: TextStyle(
       color: Colors.black87,
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      wordSpacing: 0.1,
+      letterSpacing: 0.5,
+    ),
+    headline4: TextStyle(
+      color: Colors.black87,
+      fontSize: 20,
+      fontWeight: FontWeight.w100,
+      wordSpacing: 0.1,
+    ),
+    headline5: TextStyle( // for the AppBar
+      color: Colors.white,
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+      wordSpacing: 1,
+    ),
+    subtitle1: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        wordSpacing: 1
+    ),
+    subtitle2: TextStyle(
+        fontSize: 13,
+        fontWeight: FontWeight.bold,
+        wordSpacing: 2,
+        letterSpacing: 0.2,
+    ),
+    bodyText1: TextStyle(
+      color: Colors.black87,
+      fontSize: 12,
+      fontWeight: FontWeight.w200,
+      wordSpacing: 1,
+    ),
+    bodyText2: TextStyle( //Text without theme
+      color: Colors.black87,
+      fontSize: 14,
+      fontWeight: FontWeight.w200,
+      wordSpacing: 1.5,
+      letterSpacing: 0.5,
+    ),
+    caption:TextStyle(
+      color: Colors.grey.shade600,
+      fontSize: 12,
+      fontWeight: FontWeight.w300,
+      wordSpacing: 0.3,
+    ),
   ),
   //InputDecoration
   inputDecorationTheme: InputDecorationTheme(

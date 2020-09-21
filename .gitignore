@@ -39,6 +39,7 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
+<<<<<<< HEAD
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -80,4 +81,7 @@ app.*.map.json
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
+=======
+# Exceptions to above rules.
+>>>>>>> parent of 21a5380... Merge remote-tracking branch 'Janaki/master' into master
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
