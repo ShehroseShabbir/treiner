@@ -30,7 +30,6 @@
 .pub/
 /build/
 
-<<<<<<< HEAD
 # Web related
 lib/generated_plugin_registrant.dart
 
@@ -40,8 +39,6 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Exceptions to above rules.
-=======
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -83,5 +80,4 @@ app.*.map.json
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
->>>>>>> Janaki/master
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
